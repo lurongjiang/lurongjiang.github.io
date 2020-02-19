@@ -1958,10 +1958,6 @@ kbd {
   cursor: zoom-out;
   will-change: transform;
 }
-.gallery__img {
-  margin-bottom: 10px;
-  width: 220px;
-}
 .mode {
   position: relative;
   border: 0;
@@ -2455,9 +2451,6 @@ kbd {
   .post-list .post {
     margin: 0 0 0.8rem;
     padding: 0.8rem;
-  }
-  .gallery__img {
-    width: 100%;
   }
   .friends-plugin__item {
     margin: 0;
