@@ -2458,3 +2458,6 @@ kbd {
     width: 100%;
   }
 }
+.table-container td {
+  min-width: 80px;
+}
