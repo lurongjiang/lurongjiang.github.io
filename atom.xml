@@ -38,4 +38,63 @@
     
   </entry>
   
+  <entry>
+    <title>Hive UDF</title>
+    <link href="http://yoursite.com/2019/03/15/Hive%20UDF/"/>
+    <id>http://yoursite.com/2019/03/15/Hive%20UDF/</id>
+    <published>2019-03-15T03:19:04.000Z</published>
+    <updated>2020-02-19T04:23:48.241Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Hive-UDF"><a href="#Hive-UDF" class="headerlink" title="Hive UDF"></a>Hive UDF</h1><p>hive内置函数并不一定满足我们的业务要求,所以需要拓展,即用户自定义函数</p><p><strong>UDF</strong></p><p>User Defined Function</p><ul><li>UDF (one-to-one)</li><li>UDAF(many-to-one)</li><li>UDTF(one-to-many)</li></ul><h2 id="创建UDF步骤"><a href="#创建UDF步骤" class="headerlink" title="创建UDF步骤"></a>创建UDF步骤</h2><ul><li><p>添加依赖</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hive<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hive-exec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;hive.cdh.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li></ul><ul><li>创建自定义类,继承UDF</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Hive-UDF&quot;&gt;&lt;a href=&quot;#Hive-UDF&quot; class=&quot;headerlink&quot; title=&quot;Hive UDF&quot;&gt;&lt;/a&gt;Hive UDF&lt;/h1&gt;&lt;p&gt;hive内置函数并不一定满足我们的业务要求,所以需要拓展,即用户自定义函数&lt;/p&gt;
+&lt;p&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="Hive" scheme="http://yoursite.com/categories/Hive/"/>
+    
+    
+      <category term="hive" scheme="http://yoursite.com/tags/hive/"/>
+    
+      <category term="udf" scheme="http://yoursite.com/tags/udf/"/>
+    
+      <category term="user-defined-function" scheme="http://yoursite.com/tags/user-defined-function/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hadoop MapReduce编程核心</title>
+    <link href="http://yoursite.com/2019/03/12/Hadoop%20MapReduce%E7%BC%96%E7%A8%8B%E6%A0%B8%E5%BF%83/"/>
+    <id>http://yoursite.com/2019/03/12/Hadoop%20MapReduce%E7%BC%96%E7%A8%8B%E6%A0%B8%E5%BF%83/</id>
+    <published>2019-03-12T07:14:04.000Z</published>
+    <updated>2020-02-19T04:23:19.987Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Hadoop-MapReduce编程核心"><a href="#Hadoop-MapReduce编程核心" class="headerlink" title="Hadoop MapReduce编程核心"></a>Hadoop MapReduce编程核心</h1><h2 id="Partitioner-分区"><a href="#Partitioner-分区" class="headerlink" title="Partitioner 分区"></a>Partitioner 分区</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * Partitions the key space.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * &lt;p&gt;&lt;code&gt;Partitioner&lt;/code&gt; controls the partitioning of the keys of the </span></span><br><span class="line"><span class="comment"> * intermediate map-outputs. The key (or a subset of the key) is used to derive</span></span><br><span class="line"><span class="comment"> * the partition, typically by a hash function. The total number of partitions</span></span><br><span class="line"><span class="comment"> * is the same as the number of reduce tasks for the job. Hence this controls</span></span><br><span class="line"><span class="comment"> * which of the &lt;code&gt;m&lt;/code&gt; reduce tasks the intermediate key (and hence the </span></span><br><span class="line"><span class="comment"> * record) is sent for reduction.&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * partitioner是控制中间map阶段输出结果的key的分区.key通常被hash,分发到各个分区</span></span><br><span class="line"><span class="comment"> * 分区数一般和reduce job的个数相等,</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> Reducer</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@InterfaceAudience</span>.Public</span><br><span class="line"><span class="meta">@InterfaceStability</span>.Stable</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Partitioner</span>&lt;<span class="title">K2</span>, <span class="title">V2</span>&gt; <span class="keyword">extends</span> <span class="title">JobConfigurable</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/** </span></span><br><span class="line"><span class="comment">   * Get the paritition number for a given key (hence record) given the total </span></span><br><span class="line"><span class="comment">   * number of partitions i.e. number of reduce-tasks for the job.</span></span><br><span class="line"><span class="comment">   * </span></span><br><span class="line"><span class="comment">   * &lt;p&gt;Typically a hash function on a all or a subset of the key.&lt;/p&gt;</span></span><br><span class="line"><span class="comment">   * 根据分区总数,例如reduce job个数,获取分区的编号.一般是对所有key或者key的一部分进行进行hash处理</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> key the key to be paritioned.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> value the entry value.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> numPartitions the total number of partitions.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> the partition number for the &lt;code&gt;key&lt;/code&gt;.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(K2 key, V2 value, <span class="keyword">int</span> numPartitions)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* hash分区的实现就是key取hashCode和reduce个数进行取模</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashPartitioner</span>&lt;<span class="title">K2</span>, <span class="title">V2</span>&gt; <span class="keyword">implements</span> <span class="title">Partitioner</span>&lt;<span class="title">K2</span>, <span class="title">V2</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(JobConf job)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** Use &#123;<span class="doctag">@link</span> Object#hashCode()&#125; to partition. */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(K2 key, V2 value,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> numReduceTasks)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (key.hashCode() &amp; Integer.MAX_VALUE) % numReduceTasks;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p> <strong>需要注意的是</strong></p><ul><li>分区数一般和reduce job个数相等</li><li>如果分区数&lt;reduce job个数,将导致输出有很多无用的空文件</li><li>如果分区数&gt;reduce job个数,将导致有些map输出找不到hash路径,出现java.io.IOException: Illegal partition for xxx的异常</li></ul></blockquote><h2 id="Combiner-局部汇总"><a href="#Combiner-局部汇总" class="headerlink" title="Combiner 局部汇总"></a>Combiner 局部汇总</h2><p>Combiner是hadoop对map阶段输出结果进行本地局部聚合,提高后面reduce的效率,避免大量数据进行网络传输.</p><blockquote><p><strong>需要注意的是</strong></p><ul><li>并非所有的任务都适用于Combiner</li><li>求和等操作,局部聚合可以有效的提高后面reduce的效率</li><li>平均值等操作,这种并不适用,因为局部平均值和全局平均值还是有差异的</li></ul></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Hadoop-MapReduce编程核心&quot;&gt;&lt;a href=&quot;#Hadoop-MapReduce编程核心&quot; class=&quot;headerlink&quot; title=&quot;Hadoop MapReduce编程核心&quot;&gt;&lt;/a&gt;Hadoop MapReduce编程核心&lt;/h1&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="Hadoop" scheme="http://yoursite.com/categories/Hadoop/"/>
+    
+    
+      <category term="hadoop" scheme="http://yoursite.com/tags/hadoop/"/>
+    
+      <category term="MapReduce" scheme="http://yoursite.com/tags/MapReduce/"/>
+    
+  </entry>
+  
 </feed>
