@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lurongjiang.github.io/"/>
-  <updated>2019-05-19T08:32:14.000Z</updated>
+  <updated>2020-01-16T08:14:14.000Z</updated>
   <id>https://lurongjiang.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Gradle的安装和使用</title>
+    <link href="https://lurongjiang.github.io/2020/01/15/Gradle%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/"/>
+    <id>https://lurongjiang.github.io/2020/01/15/Gradle%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</id>
+    <published>2020-01-15T04:45:14.000Z</published>
+    <updated>2020-01-16T08:14:14.000Z</updated>
+    
+    <content type="html"><![CDATA[        <h1   id="Gradle的安装和使用" >          <span class="heading-link">Gradle的安装和使用</span>        </h1>              <h2   id="下载" >          <span class="heading-link">下载</span>        </h2>      <p>可以去Gradle官网下载最新的稳定版本,目前是6.2,我自己下的4.8.1</p><p><span class="external-link"><a   href="https://downloads.gradle-dn.com/distributions/gradle-4.8.1-bin.zip"  target="_blank" rel="noopener">https://downloads.gradle-dn.com/distributions/gradle-4.8.1-bin.zip</a><i class="fa fa-external-link"></i></span></p>        <h2   id="安装" >          <span class="heading-link">安装</span>        </h2>      <p>Gradle的安装和Maven类似,就简单的解压,配置环境变量到Path就ok了</p><p><img src="/images/image/image-20200221102147192.png" alt="image-20200221102147192"></p><p><img src="/images/image/image-20200221102231848.png" alt="image-20200221102231848"></p><p>配置完成之后,打开cmd查看一下是否配置好了</p><p><img src="/images/image/image-20200221102351240.png" alt="image-20200221102351240"></p><p>看到正确输出了gradle的版本就说明配置好了</p>        <h2   id="IDEA配置Gradle" >          <span class="heading-link">IDEA配置Gradle</span>        </h2>      <p>Gradle和Maven这一点不同,Gradle无需再IDEA中进行配置操作,本地仓库地址的配置可以再IDEA中配置</p><p><img src="/images/image/image-20200221102917822.png" alt="image-20200221102917822"></p><p>这个我用的是环境变量来配置的,IDEA会自动识别,只需要在环境变量中新建一个GRADLE_USER_HOME变量指向自己的本地仓库地址就可以了</p><p><img src="/images/image/image-20200221103016741.png" alt="image-20200221103016741"></p>        <h2   id="Gradle初体验" >          <span class="heading-link">Gradle初体验</span>        </h2>              <h3   id="新建Gradle工程" >          <span class="heading-link">新建Gradle工程</span>        </h3>      <p>选择Gradle和JDK</p><p><img src="/images/image/image-20200221103418062.png" alt="image-20200221103418062"></p>        <h3   id="填写项目的GAV" >          <span class="heading-link">填写项目的GAV</span>        </h3>      <p>填写项目的GAV坐标,点Finished</p><p><img src="/images/image/image-20200221103642260.png" alt="image-20200221103642260"></p>        <h3   id="Gradle的目录" >          <span class="heading-link">Gradle的目录</span>        </h3>      <p>Gradle的目录结构和Maven类似</p><p><img src="/images/image/image-20200221104845138.png" alt="image-20200221104845138"></p><ul><li><p>src就是source目录</p><ul><li>src/main放代码目录<ul><li>src/main/java 放java代码目录</li><li>src/main/resouces放资源文件</li></ul></li></ul></li><li><p>src/test是测试目录</p><ul><li>src/test/java 放测试的java代码目录</li><li>src/test/resouces放测试的资源文件</li></ul></li></ul>        <h2   id="Groovy编程" >          <span class="heading-link">Groovy编程</span>        </h2>              <h3   id="打开Groovy-Console" >          <span class="heading-link">打开Groovy Console</span>        </h3>      <p>Tools-&gt;Groovy Console</p><p><img src="/images/image/image-20200221105555961.png" alt="image-20200221105555961"></p>        <h3   id="HelloWorld" >          <span class="heading-link">HelloWorld</span>        </h3>      <p>凡事先HelloWorld一下</p><p><img src="/images/image/image-20200221105836306.png" alt="image-20200221105836306"></p><p><img src="/images/image/image-20200221105915909.png" alt="image-20200221105915909"></p>        <h3   id="Groovy语法" >          <span class="heading-link">Groovy语法</span>        </h3>      <ul><li><p>Groovy可以省略最末尾的分号</p></li><li><p>Groovy可以省略小括号</p><p><img src="/images/image/image-20200221110227268.png" alt="image-20200221110227268"></p></li></ul><blockquote><p>这两个特性可以看出,Groovy的书写更加自由,随意</p></blockquote><ul><li><p>定义变量 def</p><p><img src="/images/image/image-20200221110338615.png" alt="image-20200221110338615"></p><p>groovy会根据数据自动推断类型</p></li><li><p>定义集合</p><p><img src="/images/image/image-20200221110630481.png" alt="image-20200221110630481"></p></li><li><p>定义Map</p><p><img src="/images/image/image-20200221110825151.png" alt="image-20200221110825151"></p></li><li><p>闭包</p><p>闭包就是一段代码块,在Gradle中主要是把闭包当参数使用</p><p><img src="/images/image/image-20200221111242382.png" alt="image-20200221111242382"></p></li><li><p>带参数的闭包</p><p><img src="/images/image/image-20200221111511073.png" alt="image-20200221111511073"></p></li></ul>        <h2   id="Gradle配置文件" >          <span class="heading-link">Gradle配置文件</span>        </h2>      <ul><li><p>build.gradle 构建项目配置</p><p><img src="/images/image/image-20200221112432889.png" alt="image-20200221112432889"></p></li></ul>        <h2   id="优先本地加载" >          <span class="heading-link">优先本地加载</span>        </h2>      <p>在repositories中指定先从本地加载</p><p><img src="/images/image/image-20200221113447193.png" alt="image-20200221113447193"></p>]]></content>
+    
+    <summary type="html">
+    
+      和Maven类似的项目依赖管理和构建工具Gradle的简单教程
+    
+    </summary>
+    
+    
+      <category term="Gradle" scheme="https://lurongjiang.github.io/categories/Gradle/"/>
+    
+    
+      <category term="Gradle" scheme="https://lurongjiang.github.io/tags/Gradle/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring解析xml成BeanDefinition的过程</title>
