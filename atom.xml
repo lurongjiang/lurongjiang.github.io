@@ -63,6 +63,29 @@
   </entry>
   
   <entry>
+    <title>Azkaban配置代理用户执行任务</title>
+    <link href="https://lurongjiang.github.io/2019/04/06/Azkaban%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E7%94%A8%E6%88%B7%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"/>
+    <id>https://lurongjiang.github.io/2019/04/06/Azkaban%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E7%94%A8%E6%88%B7%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/</id>
+    <published>2019-04-06T05:15:54.000Z</published>
+    <updated>2019-04-06T08:45:23.000Z</updated>
+    
+    <content type="html"><![CDATA[        <h1   id="Azkaban配置代理用户执行任务" >          <span class="heading-link">Azkaban配置代理用户执行任务</span>        </h1>      <p>有时候我们希望启动azkaban的用户和启动任务脚本使用不同的用户</p><p>这时候我们可以使用azkaban的execute-as-user插件完成,参考文档<span class="external-link"><a   href="https://azkaban.readthedocs.io/en/latest/configuration.html#plugin-configurations"  target="_blank" rel="noopener">Plugin Configurations</a><i class="fa fa-external-link"></i></span></p><figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里修正一下,execute-as-user.c的位置官网写成azkaban-common的目录</span></span><br><span class="line"><span class="comment"># 但是3.81.0我在github在azkaban-util下面找到的</span></span><br><span class="line">scp ./az-exec-util/src/main/c/execute-as-user.c</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译C文件,需要提前安装gcc</span></span><br><span class="line">gcc execute-as-user.c -o execute-as-user</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置权限为root</span></span><br><span class="line">chown root execute-as-user</span><br><span class="line"><span class="comment"># 这个权限比较有意思,---Sr-s---,不懂意思,很特殊的权限</span></span><br><span class="line">chmod 6050 execute-as-user</span><br></pre></td></tr></table></div></figure><p>配置一下plugin</p><p>$AZKABAN_HOME/plugins/jobtypes/commonprivate.properties</p><figure class="highlight properties"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">execute.as.user</span>=<span class="string">true</span></span><br><span class="line"><span class="meta">azkaban.native.lib</span>=<span class="string">/home/lurongjiang/azkaban-3.81.0</span></span><br><span class="line"><span class="meta">proxy.user</span>=<span class="string"></span></span><br><span class="line"><span class="meta">azkaban.should.proxy</span>=<span class="string">true</span></span><br></pre></td></tr></table></div></figure><p>这样在project的.flow中就可以设置user.to.proxy参数来实现用户代理执行了</p><blockquote><p><strong>注意</strong></p><ul><li>要代理的用户记得要在linux中存在</li><li>默认使用的是azkaban用户组,所以需要groupadd,或者参考文档中的另外一个参数</li><li>记得赋予proxy用户执行脚本的权限,否则百搭</li></ul></blockquote><p>test.flow</p><figure class="highlight yaml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">config:</span></span><br><span class="line">  <span class="attr">time:</span> <span class="string">""</span></span><br><span class="line">  <span class="attr">user.to.proxy:</span> <span class="string">lurongjiang</span></span><br><span class="line"><span class="attr">nodes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">jobA</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">command</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">/home/lurongjiang/test/a.sh</span> <span class="string">$&#123;time&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">jobB</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">command</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">/home/lurongjiang/test/b.sh</span> <span class="string">$&#123;time&#125;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">jobC</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">command</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">/home/lurongjiang/test/c.sh</span> <span class="string">$&#123;time&#125;</span></span><br></pre></td></tr></table></div></figure>]]></content>
+    
+    <summary type="html">
+    
+      简单的配置,实现登录的Azkaban用户和执行任务用户不同的需求
+    
+    </summary>
+    
+    
+      <category term="Azkaban" scheme="https://lurongjiang.github.io/categories/Azkaban/"/>
+    
+    
+      <category term="Azkaban" scheme="https://lurongjiang.github.io/tags/Azkaban/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SpringCloud概述</title>
     <link href="https://lurongjiang.github.io/2019/04/05/SpringCloud/"/>
     <id>https://lurongjiang.github.io/2019/04/05/SpringCloud/</id>
@@ -132,29 +155,6 @@
   </entry>
   
   <entry>
-    <title>Hive的一些坑</title>
-    <link href="https://lurongjiang.github.io/2019/04/01/hive%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
-    <id>https://lurongjiang.github.io/2019/04/01/hive%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</id>
-    <published>2019-04-01T10:23:05.000Z</published>
-    <updated>2019-04-03T07:05:09.000Z</updated>
-    
-    <content type="html"><![CDATA[        <h1   id="Hive的一些坑" >          <span class="heading-link">Hive的一些坑</span>        </h1>      <ol><li>specified datastore driver(“com.mysql.jdbc.Driver”) was not found</li></ol><p><img src="/images/image/image-20200126114217615.png" alt="image-20200126114217615"></p><p>这个是因为驱动不对,下载了个新的就行了</p><ol start="2"><li>Unable to open a test connection to the given database. JDBC url = jdbc:mysql://hadoop001:3306/test?useSSL=true&amp;serverTimezone=GMT%2B8, username = lrj. Terminating connection pool (set lazyInit to true if you expect to start your database after your app). Original Exception:</li></ol><p><img src="/images/image/image-20200126114500594.png" alt="image-20200126114500594"></p><p>这个需要把ssl禁用了,在jdbcUrl上指定useSSL=false</p><ol start="3"><li>MetaException(message:Version information not found in metastore. )</li></ol><p><img src="/images/image/image-20200126114708126.png" alt="image-20200126114708126"></p><p>这个需要将hive-site.xml中的hive.metastore.schema.verification设置为false</p><ol start="4"><li>Required table missing : “<code>VERSION</code>“ in Catalog “” Schema “”. DataNucleus requires this table to perform its persistence operations. Either your MetaData is incorrect, or you need to enable “datanucleus.autoCreateTables”</li></ol><p><img src="/images/image/image-20200126114930654.png" alt="image-20200126114930654"></p><p>这个需要初始化一下schema,执行</p><p>schematool -dbType mysql -initSchema</p><hr><p>之后就可以启动metastore + hiveserver2服务</p><figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nohup hive --service  metastore &gt; ~/metastore.log 2&gt;&amp;1 &amp;</span><br><span class="line">nohup  hiveserver2  &gt; ~/hiveserver2.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></div></figure><p>测试hiveserver2服务是否ok</p><figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beeline</span><br></pre></td></tr></table></div></figure><p>打印日志</p><figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">which: no hbase in (&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;bin:&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;sbin:&#x2F;mysql&#x2F;bin:&#x2F;home&#x2F;lurongjiang&#x2F;.local&#x2F;bin:&#x2F;home&#x2F;lurongjiang&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;sbin:&#x2F;usr&#x2F;software&#x2F;jdk1.8.0_231&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;apache-maven-3.6.3&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;scala-2.11.12&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;hive-1.1.0-cdh5.16.2&#x2F;bin)</span><br><span class="line">Beeline version 1.1.0-cdh5.16.2 by Apache Hive</span><br><span class="line"># 查看下数据库,此时发现没连接</span><br><span class="line">beeline&gt; show databases;</span><br><span class="line">No current connection</span><br><span class="line"># 尝试连接数据库,只需要输入用户名就行,不需要密码</span><br><span class="line">beeline&gt; !connect jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default</span><br><span class="line">Connecting to jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default</span><br><span class="line">Enter username for jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default: lrj</span><br><span class="line">Enter password for jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default: </span><br><span class="line">Error: Failed to open new session: java.lang.RuntimeException: java.lang.RuntimeException: org.apache.hadoop.security.AccessControlException: Permission denied: user&#x3D;lrj, access&#x3D;EXECUTE, inode&#x3D;&quot;&#x2F;tmp&quot;:lurongjiang:supergroup:drwx</span><br></pre></td></tr></table></div></figure><ol start="5"><li>java.lang.RuntimeException: java.lang.RuntimeException: org.apache.hadoop.security.AccessControlException: Permission denied: user=lrj, access=EXECUTE, inode=”/tmp”:lurongjiang:supergroup:drwx——</li></ol><p><img src="/images/image/image-20200126115801228.png" alt="image-20200126115801228"></p><p> 这个是没权限</p><p>hadoop fs -chmod -R 777  /tmp</p><p>再次启动就ok了.</p>]]></content>
-    
-    <summary type="html">
-    
-      总结一下在使用hive的时候遇到的一些坑
-    
-    </summary>
-    
-    
-      <category term="Hive" scheme="https://lurongjiang.github.io/categories/Hive/"/>
-    
-    
-      <category term="Hive" scheme="https://lurongjiang.github.io/tags/Hive/"/>
-    
-  </entry>
-  
-  <entry>
     <title>MapReduce教程</title>
     <link href="https://lurongjiang.github.io/2019/04/01/MapReduce%20Tutorial/"/>
     <id>https://lurongjiang.github.io/2019/04/01/MapReduce%20Tutorial/</id>
@@ -176,6 +176,29 @@
     
     
       <category term="Hadoop,MapReduce" scheme="https://lurongjiang.github.io/tags/Hadoop-MapReduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hive的一些坑</title>
+    <link href="https://lurongjiang.github.io/2019/04/01/hive%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
+    <id>https://lurongjiang.github.io/2019/04/01/hive%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</id>
+    <published>2019-04-01T10:23:05.000Z</published>
+    <updated>2019-04-03T07:05:09.000Z</updated>
+    
+    <content type="html"><![CDATA[        <h1   id="Hive的一些坑" >          <span class="heading-link">Hive的一些坑</span>        </h1>      <ol><li>specified datastore driver(“com.mysql.jdbc.Driver”) was not found</li></ol><p><img src="/images/image/image-20200126114217615.png" alt="image-20200126114217615"></p><p>这个是因为驱动不对,下载了个新的就行了</p><ol start="2"><li>Unable to open a test connection to the given database. JDBC url = jdbc:mysql://hadoop001:3306/test?useSSL=true&amp;serverTimezone=GMT%2B8, username = lrj. Terminating connection pool (set lazyInit to true if you expect to start your database after your app). Original Exception:</li></ol><p><img src="/images/image/image-20200126114500594.png" alt="image-20200126114500594"></p><p>这个需要把ssl禁用了,在jdbcUrl上指定useSSL=false</p><ol start="3"><li>MetaException(message:Version information not found in metastore. )</li></ol><p><img src="/images/image/image-20200126114708126.png" alt="image-20200126114708126"></p><p>这个需要将hive-site.xml中的hive.metastore.schema.verification设置为false</p><ol start="4"><li>Required table missing : “<code>VERSION</code>“ in Catalog “” Schema “”. DataNucleus requires this table to perform its persistence operations. Either your MetaData is incorrect, or you need to enable “datanucleus.autoCreateTables”</li></ol><p><img src="/images/image/image-20200126114930654.png" alt="image-20200126114930654"></p><p>这个需要初始化一下schema,执行</p><p>schematool -dbType mysql -initSchema</p><hr><p>之后就可以启动metastore + hiveserver2服务</p><figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nohup hive --service  metastore &gt; ~/metastore.log 2&gt;&amp;1 &amp;</span><br><span class="line">nohup  hiveserver2  &gt; ~/hiveserver2.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></div></figure><p>测试hiveserver2服务是否ok</p><figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beeline</span><br></pre></td></tr></table></div></figure><p>打印日志</p><figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">which: no hbase in (&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;bin:&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;sbin:&#x2F;mysql&#x2F;bin:&#x2F;home&#x2F;lurongjiang&#x2F;.local&#x2F;bin:&#x2F;home&#x2F;lurongjiang&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;hadoop-2.6.0-cdh5.16.2&#x2F;sbin:&#x2F;usr&#x2F;software&#x2F;jdk1.8.0_231&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;apache-maven-3.6.3&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;scala-2.11.12&#x2F;bin:&#x2F;usr&#x2F;software&#x2F;hive-1.1.0-cdh5.16.2&#x2F;bin)</span><br><span class="line">Beeline version 1.1.0-cdh5.16.2 by Apache Hive</span><br><span class="line"># 查看下数据库,此时发现没连接</span><br><span class="line">beeline&gt; show databases;</span><br><span class="line">No current connection</span><br><span class="line"># 尝试连接数据库,只需要输入用户名就行,不需要密码</span><br><span class="line">beeline&gt; !connect jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default</span><br><span class="line">Connecting to jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default</span><br><span class="line">Enter username for jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default: lrj</span><br><span class="line">Enter password for jdbc:hive2:&#x2F;&#x2F;hadoop001:10000&#x2F;default: </span><br><span class="line">Error: Failed to open new session: java.lang.RuntimeException: java.lang.RuntimeException: org.apache.hadoop.security.AccessControlException: Permission denied: user&#x3D;lrj, access&#x3D;EXECUTE, inode&#x3D;&quot;&#x2F;tmp&quot;:lurongjiang:supergroup:drwx</span><br></pre></td></tr></table></div></figure><ol start="5"><li>java.lang.RuntimeException: java.lang.RuntimeException: org.apache.hadoop.security.AccessControlException: Permission denied: user=lrj, access=EXECUTE, inode=”/tmp”:lurongjiang:supergroup:drwx——</li></ol><p><img src="/images/image/image-20200126115801228.png" alt="image-20200126115801228"></p><p> 这个是没权限</p><p>hadoop fs -chmod -R 777  /tmp</p><p>再次启动就ok了.</p>]]></content>
+    
+    <summary type="html">
+    
+      总结一下在使用hive的时候遇到的一些坑
+    
+    </summary>
+    
+    
+      <category term="Hive" scheme="https://lurongjiang.github.io/categories/Hive/"/>
+    
+    
+      <category term="Hive" scheme="https://lurongjiang.github.io/tags/Hive/"/>
     
   </entry>
   
