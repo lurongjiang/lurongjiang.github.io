@@ -218,7 +218,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><lin
         <h2   id="hadoop-HA遇到的问题" >
           <span class="heading-link">hadoop HA遇到的问题</span>
         </h2>
-      <p><img src="C:%5CUsers%5C18179%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200316105241456.png" alt="image-20200316105241456"></p>
+      <p><img src="/images/image/image-20200316105241456.png" alt="image-20200316105241456"></p>
 <p>这个好像是我提前创建data目录和tmp目录造成的,我重新删除hadoop的data,tmp目录,以及zk的hadoop-ha的znode,删除zk的data/version-2,重新启动zk,启动jn,formatZK,format namenode就好了</p>
 
         <h2   id="测试" >
@@ -226,19 +226,19 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><lin
         </h2>
       <ul>
 <li><p>测试standby是否可以创建目录</p>
-<p><img src="C:%5CUsers%5C18179%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200316123403542.png" alt="image-20200316123403542"></p>
+<p><img src="/images/image/image-20200316123403542.png" alt="image-20200316123403542"></p>
 <p>发现不可以创建目录</p>
 </li>
 <li><p>测试standby是否可写</p>
-<p><img src="C:%5CUsers%5C18179%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200316123535913.png" alt="image-20200316123535913"></p>
+<p><img src="/images/image/image-20200316123535913.png" alt="image-20200316123535913"></p>
 <p>发现不可以写</p>
 </li>
 <li><p>测试standby是否可读</p>
-<p><img src="C:%5CUsers%5C18179%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200316123634814.png" alt="image-20200316123634814"></p>
+<p><img src="/images/image/image-20200316123634814.png" alt="image-20200316123634814"></p>
 <p>发现不可以读</p>
 </li>
 <li><p>测试故障是否能会转移</p>
-<p><img src="C:%5CUsers%5C18179%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200316123843722.png" alt="image-20200316123843722"></p>
+<p><img src="/images/image/image-20200316123843722.png" alt="image-20200316123843722"></p>
 <p>发现故障转移正常</p>
 </li>
 </ul>
