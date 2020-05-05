@@ -272,7 +272,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><lin
 <p>继续启动,发现还是报错了,查看一下日志</p>
 <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tailf -200 /opt/cm/cm-5.16.1/<span class="built_in">log</span>/cloudera-scm-server/cloudera-scm-server.log</span><br></pre></td></tr></table></div></figure>
 
-<p><img src="/images/imageimage-20200502112327363.png" alt="image-20200502112327363"></p>
+<p><img src="/images/image/image-20200502112327363.png" alt="image-20200502112327363"></p>
 <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 /usr/share/java/mysql-connector-java-5.1.47.jar</span><br><span class="line"><span class="comment"># 这个一定要做,去掉版本号,否则不认</span></span><br><span class="line">mv /usr/share/java/mysql-connector-java-5.1.47.jar /usr/share/java/mysql-connector-java.jar</span><br></pre></td></tr></table></div></figure>
 
 
@@ -281,7 +281,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><lin
         </h3>
       <p>开放7180</p>
 <p>待程序启动后,访问7180端口,就可以看到cm界面了</p>
-<p><img src="/images/imageimage-20200502115719630.png" alt="image-20200502115719630"></p>
+<p><img src="/images/image/image-20200502115719630.png" alt="image-20200502115719630"></p>
 <p>默认账号密码就是admin/admin</p>
 
         <h3   id="启动agent" >
@@ -315,7 +315,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><lin
         </h2>
       <ul>
 <li><p>web界面关闭cdh和cms</p>
-<p><img src="/images/imageimage-20200502145018638.png" alt="image-20200502145018638"></p>
+<p><img src="/images/image/image-20200502145018638.png" alt="image-20200502145018638"></p>
 </li>
 <li><p>关闭agent</p>
 <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/cm/cm-5.16.1/etc/init.d/cloudera-scm-agent stop</span><br></pre></td></tr></table></div></figure>
