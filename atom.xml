@@ -425,7 +425,9 @@
     </summary>
     
     
-      <category term="Spark,SparkCore]" scheme="https://lurongjiang.github.io/categories/Spark-SparkCore/"/>
+      <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+    
+      <category term="SparkCore" scheme="https://lurongjiang.github.io/categories/Spark/SparkCore/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
