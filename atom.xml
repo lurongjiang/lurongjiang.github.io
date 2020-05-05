@@ -255,7 +255,9 @@
     </summary>
     
     
-      <category term="Spark,SparkStreaming]" scheme="https://lurongjiang.github.io/categories/Spark-SparkStreaming/"/>
+      <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+    
+      <category term="SparkStreaming" scheme="https://lurongjiang.github.io/categories/Spark/SparkStreaming/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
