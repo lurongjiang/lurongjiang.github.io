@@ -55,10 +55,12 @@
     </summary>
     
     
-      <category term="SpringCloud" scheme="https://lurongjiang.github.io/categories/SpringCloud/"/>
+      <category term="Spring" scheme="https://lurongjiang.github.io/categories/Spring/"/>
     
     
-      <category term="SpringCloud" scheme="https://lurongjiang.github.io/tags/SpringCloud/"/>
+      <category term="Spring" scheme="https://lurongjiang.github.io/tags/Spring/"/>
+    
+      <category term="SpringSecurity" scheme="https://lurongjiang.github.io/tags/SpringSecurity/"/>
     
   </entry>
   
@@ -78,8 +80,10 @@
     </summary>
     
     
-      <category term="SpringCloud" scheme="https://lurongjiang.github.io/categories/SpringCloud/"/>
+      <category term="Spring" scheme="https://lurongjiang.github.io/categories/Spring/"/>
     
+    
+      <category term="Spring" scheme="https://lurongjiang.github.io/tags/Spring/"/>
     
       <category term="SpringCloud" scheme="https://lurongjiang.github.io/tags/SpringCloud/"/>
     
@@ -103,8 +107,12 @@
     
       <category term="Spring" scheme="https://lurongjiang.github.io/categories/Spring/"/>
     
+      <category term="SpringCore" scheme="https://lurongjiang.github.io/categories/Spring/SpringCore/"/>
+    
     
       <category term="Spring" scheme="https://lurongjiang.github.io/tags/Spring/"/>
+    
+      <category term="BeanDefinition" scheme="https://lurongjiang.github.io/tags/BeanDefinition/"/>
     
   </entry>
   
