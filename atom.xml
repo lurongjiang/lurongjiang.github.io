@@ -57,6 +57,8 @@
     
       <category term="Spring" scheme="https://lurongjiang.github.io/categories/Spring/"/>
     
+      <category term="SpringSecurity" scheme="https://lurongjiang.github.io/categories/Spring/SpringSecurity/"/>
+    
     
       <category term="Spring" scheme="https://lurongjiang.github.io/tags/Spring/"/>
     
@@ -81,6 +83,8 @@
     
     
       <category term="Spring" scheme="https://lurongjiang.github.io/categories/Spring/"/>
+    
+      <category term="SpringCloud" scheme="https://lurongjiang.github.io/categories/Spring/SpringCloud/"/>
     
     
       <category term="Spring" scheme="https://lurongjiang.github.io/tags/Spring/"/>
@@ -251,7 +255,7 @@
     </summary>
     
     
-      <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+      <category term="Spark,SparkStreaming]" scheme="https://lurongjiang.github.io/categories/Spark-SparkStreaming/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
@@ -280,6 +284,8 @@
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
     
+      <category term="SparkStreaming" scheme="https://lurongjiang.github.io/categories/Spark/SparkStreaming/"/>
+    
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
     
@@ -304,6 +310,8 @@
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+    
+      <category term="SparkSQL" scheme="https://lurongjiang.github.io/categories/Spark/SparkSQL/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
@@ -331,6 +339,8 @@
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+    
+      <category term="SparkSQL" scheme="https://lurongjiang.github.io/categories/Spark/SparkSQL/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
@@ -361,6 +371,8 @@
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
     
+      <category term="SparkSQL" scheme="https://lurongjiang.github.io/categories/Spark/SparkSQL/"/>
+    
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
     
@@ -386,6 +398,8 @@
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
     
+      <category term="SparkSQL" scheme="https://lurongjiang.github.io/categories/Spark/SparkSQL/"/>
+    
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
     
@@ -409,7 +423,7 @@
     </summary>
     
     
-      <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+      <category term="Spark,SparkCore]" scheme="https://lurongjiang.github.io/categories/Spark-SparkCore/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
@@ -435,6 +449,8 @@
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+    
+      <category term="SparkCore" scheme="https://lurongjiang.github.io/categories/Spark/SparkCore/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
@@ -486,6 +502,8 @@
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
     
+      <category term="SparkCore" scheme="https://lurongjiang.github.io/categories/Spark/SparkCore/"/>
+    
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
     
@@ -510,6 +528,8 @@
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/categories/Spark/"/>
+    
+      <category term="SparkCore" scheme="https://lurongjiang.github.io/categories/Spark/SparkCore/"/>
     
     
       <category term="Spark" scheme="https://lurongjiang.github.io/tags/Spark/"/>
