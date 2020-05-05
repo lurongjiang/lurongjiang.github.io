@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="keywords" content="LRJ, Blog"><meta name="description" content="个人博客,记录成长历程"><title>scala基础-数组和集合</title><link rel="icon" href="/images/icons/favicon-16x16.png?v=1.7.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=1.7.0" type="image/png" sizes="32x32"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=1.7.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontawesome: {"prefix":"fa"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  post_widget: {"end_text":true},
+  night_mode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","word_wrap":false},
+  reward: false,
+  fancybox: false,
+  zoom_image: {"enable":true,"mask_color":"rgba(0,0,0,0.6)"},
+  gallery_waterfall: undefined,
+  lazyload: undefined,
+  pjax: undefined,
+  external_link: {"icon":{"enable":true,"name":"external-link"}},
+  shortcuts: undefined,
+  prompt: {"copy_success":"Copy Success","copy_error":"Copy Error","creative_commons":"Creative Commons","copy_button":"Copy"}
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-btn fa fa-bars"></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/"><i class="fa fa-home"></i>Home</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/archives/"><i class="fa fa-folder-open"></i>Archives</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/categories/"><i class="fa fa-th"></i>Categories</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/tags/"><i class="fa fa-tags"></i>Tags</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/about/"><i class="fa fa-user"></i>About</a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-info"><div class="header-info-inner"><div class="header-info-title">Blog</div><div class="header-info-subtitle">个人博客,记录成长历程</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content"><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-header-title">scala基础-数组和集合</h1><div class="post-header-meta"><span class="post-header-meta-create"><i class="fa fa-calendar-o"></i><span>Posted </span><span>2019-01-29</span></span><span class="post-header-meta-update"><i class="fa fa-calendar-check-o"></i><span>updated </span><span>2019-02-05</span></span></div></header><div class="post-body">
+        <h1   id="scala基础-数组和集合" >
+          <span class="heading-link">scala基础-数组和集合</span>
+        </h1>
+      
+        <h2   id="定长数组-Array" >
+          <span class="heading-link">定长数组-Array</span>
+        </h2>
+      <ul>
+<li><p>new Array()需要声明类型和长度,否则泛型是Nothing,无法进行后续赋值</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Int</span>](<span class="number">5</span>)</span><br><span class="line"><span class="keyword">for</span> (x&lt;<span class="number">-0</span> until <span class="number">5</span>)&#123;</span><br><span class="line">    array(x)=x</span><br><span class="line">&#125;</span><br><span class="line">array.foreach(println)</span><br><span class="line"><span class="comment">//输出:0,1,2,3,4</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>Array有apply方法,可以不需要new</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line">array.foreach(println)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>取数据,直接下标取,注意下标是从0开始的</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line">println(array(<span class="number">0</span>),array(<span class="number">2</span>))</span><br><span class="line"><span class="comment">//输出(a,c),</span></span><br><span class="line"><span class="comment">//array(3)会报错java.lang.ArrayIndexOutOfBoundsException</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>遍历</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line"><span class="keyword">for</span>(x&lt;-array)&#123;</span><br><span class="line">    print(x)</span><br><span class="line">    print(<span class="string">","</span>)</span><br><span class="line">&#125;</span><br><span class="line">array.foreach(println)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>反转 reverse</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line">array.foreach(println)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>合并 ++</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array1=<span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>)</span><br><span class="line"><span class="keyword">val</span> array2=<span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"><span class="keyword">val</span> arr=array1 ++ array2</span><br><span class="line">arr.foreach(println)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>针对数值类型</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">println(array.min,array.max,array.sum)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>mkString</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line">println(array.mkString(<span class="string">","</span>))</span><br><span class="line"><span class="comment">//带首尾</span></span><br><span class="line">println(array.mkString(<span class="string">"["</span>,<span class="string">","</span>,<span class="string">"]"</span>))</span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ul>
+
+        <h2   id="变长数组-ArrayBuffer" >
+          <span class="heading-link">变长数组-ArrayBuffer</span>
+        </h2>
+      <ul>
+<li><p>初始化</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">ArrayBuffer</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//可以传入初始容量ArrayBuffer[String](2),默认是16</span></span><br><span class="line"><span class="keyword">val</span> array=<span class="type">ArrayBuffer</span>[<span class="type">String</span>]()</span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>添加单个元素 += 元素</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array+=<span class="string">"a"</span></span><br><span class="line">array+=<span class="string">"b"</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>加数组 ++ 数组</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//但是这个返回的是新的数组,并不是再array的基础上加的</span></span><br><span class="line"><span class="keyword">val</span> result=array ++ <span class="type">Array</span>(<span class="string">"1"</span>,<span class="string">"2"</span>)</span><br><span class="line">println(array.mkString(<span class="string">","</span>))</span><br><span class="line">println(result.mkString(<span class="string">","</span>))</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>指定位置插入 insert</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个是要插入的下标,后面为可变参数</span></span><br><span class="line">array.insert(<span class="number">0</span>,<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)</span><br><span class="line">println(array.mkString(<span class="string">","</span>))</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>删除指定下标的元素,remove(index)</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array.remove(<span class="number">0</span>)</span><br><span class="line">println(array.mkString(<span class="string">","</span>))</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>从某个位置开始,删除N个,remove(index,count)</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">ArrayBuffer</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>)</span><br><span class="line">array.remove(<span class="number">0</span>,<span class="number">3</span>)</span><br><span class="line">println(array.mkString(<span class="string">","</span>))</span><br><span class="line"><span class="comment">//输出 d</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>从尾部开始删除 trimEnd(count)</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">ArrayBuffer</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>)</span><br><span class="line">array.trimEnd(<span class="number">2</span>)</span><br><span class="line">println(array.mkString(<span class="string">","</span>))</span><br><span class="line"><span class="comment">//输出 a,b</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>变长到定长, toArray</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">ArrayBuffer</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>)</span><br><span class="line">array.toArray.mkString(<span class="string">","</span>)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>定长到变长</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">Array</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>)</span><br><span class="line">array.toBuffer.mkString(<span class="string">","</span>)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>遍历</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array=<span class="type">ArrayBuffer</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>)</span><br><span class="line"><span class="keyword">for</span>(x&lt;-array)&#123;</span><br><span class="line">    println(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ul>
+
+        <h2   id="定长集合-List" >
+          <span class="heading-link">定长集合-List</span>
+        </h2>
+      <blockquote>
+<p>List有两个子样例类,Nil,scala.::<br>Nil 是List为空的情形,</p>
+<p>scala.collection.immutable.Nil = List[Nothing]()</p>
+</blockquote>
+<ul>
+<li><p>初始化</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list=<span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>第一个元素 head</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.head</span><br><span class="line"><span class="comment">//输出 1</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>tail</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">list.tail</span><br><span class="line"><span class="comment">//List(2,3,4)</span></span><br><span class="line">list.tail.tail</span><br><span class="line"><span class="comment">//List(3,4)</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>最后加一个元素 :+</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1=list :+ <span class="number">4</span></span><br><span class="line">list.mkString(<span class="string">","</span>)</span><br><span class="line">list1.mkString(<span class="string">","</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以感受到 :+ 返回的是一个新的List,也就是list和list1不一样</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>再List前面加单个元素 +:</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1=list :+ <span class="number">4</span></span><br><span class="line"><span class="keyword">val</span> list2= <span class="number">4</span> +: list</span><br><span class="line"></span><br><span class="line">list.mkString(<span class="string">","</span>) <span class="comment">// 1,2,3,4</span></span><br><span class="line">list1.mkString(<span class="string">","</span>) <span class="comment">// 1,2,3,4,4</span></span><br><span class="line">list2.mkString(<span class="string">","</span>) <span class="comment">// 4,1,2,3,4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这个也是返回新的List,原来的没法变</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>::Nil添加</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>::<span class="number">2</span>::<span class="number">3</span>::<span class="type">Nil</span> <span class="comment">//List(1,2,3)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> list1 = <span class="number">1</span>::list</span><br><span class="line"><span class="keyword">val</span> list2 = <span class="number">1</span>::<span class="number">2</span>::list</span><br><span class="line">list.mkString(<span class="string">","</span>) <span class="comment">// 1,2,3,4</span></span><br><span class="line">list1.mkString(<span class="string">","</span>) <span class="comment">// 1,1,2,3,4</span></span><br><span class="line">list2.mkString(<span class="string">","</span>) <span class="comment">// 1,2,1,2,3,4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这个也是返回新的List,原来的不变,总之定长List永远是不变的</span></span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ul>
+
+        <h2   id="变长集合-ListBuffer" >
+          <span class="heading-link">变长集合-ListBuffer</span>
+        </h2>
+      <ul>
+<li><p>初始化</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.collection.mutable.<span class="type">ListBuffer</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> list=<span class="type">ListBuffer</span>[<span class="type">Int</span>]()</span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>加单个元素 +=</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list+=<span class="number">2</span></span><br><span class="line">list+=<span class="number">3</span></span><br><span class="line">list.mkString(<span class="string">","</span>) <span class="comment">//2,3</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>加定长集合 ++</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1=list ++ <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">list.mkString(<span class="string">","</span>) <span class="comment">//2,3</span></span><br><span class="line">list1.mkString(<span class="string">","</span>) <span class="comment">//2,3,1,2,3,4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这个返回的也是新的 ListBuffer,原来的不变</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>删除元素 -= ,注意<strong>这里并不是下标,而是元素</strong></p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list1 -= <span class="number">2</span> <span class="comment">//3,1,2,3,4</span></span><br><span class="line">list1 -= <span class="number">2</span> <span class="comment">//3,1,3,4</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>删除多个元素</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list1= <span class="type">ListBuffer</span>(<span class="number">1</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">3</span>) </span><br><span class="line">list1 --= <span class="type">List</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) <span class="comment">//6, 7, 1, 2, 1, 4, 3</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>head</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list=<span class="type">ListBuffer</span>(<span class="number">5</span>)</span><br><span class="line">list.head <span class="comment">//5</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>tail</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list=<span class="type">ListBuffer</span>(<span class="number">5</span>)</span><br><span class="line">list.tail <span class="comment">//ListBuffer()</span></span><br><span class="line"><span class="comment">//注意这里并不是Nil,Nil是List的子样例类</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>toList</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list=<span class="type">ListBuffer</span>(<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>)</span><br><span class="line">list.toList <span class="comment">//List(5,7,8)</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>isEmpty</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list=<span class="type">ListBuffer</span>(<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>)</span><br><span class="line">list.isEmpty</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+
+</li>
+</ul>
+</div><footer class="post-footer"><div class="post-end"><p><span>------ </span><span>End of the article, thanks for your reading</span><span> ------</span></p></div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-author-name">Author: </span><span class="post-copyright-author-value"><a href="https://lurongjiang.github.io">LRJ</a></span></div><div class="post-copyright-link"><span class="post-copyright-link-name">Link: </span><span class="post-copyright-link-value"><a href="https://lurongjiang.github.io/2019/01/29/scala%E5%9F%BA%E7%A1%80-%E9%9B%86%E5%90%88/">https://lurongjiang.github.io/2019/01/29/scala%E5%9F%BA%E7%A1%80-%E9%9B%86%E5%90%88/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-notice-name">Copyright: </span><span class="post-copyright-notice-value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/Scala/">Scala</a></span></div><nav class="paginator"><div class="paginator-post"><div class="paginator-post-prev"><a href="/2019/02/04/scala%E5%9F%BA%E7%A1%80-%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D/"><i class="fa fa-chevron-left"></i><span>Scala基础-模式匹配</span></a></div><div class="paginator-post-next"><a href="/2019/01/26/scala%E5%9F%BA%E7%A1%80-%E9%98%9F%E5%88%97/"><span>scala基础-Queue,Set,Tuple,Map</span><i class="fa fa-chevron-right"></i></a></div></div></nav></footer></div></div></div><aside class="sidebar" id="sidebar"><div class="sidebar-inner"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#scala基础-数组和集合"><span class="toc-number">1.</span> <span class="toc-text">
+          scala基础-数组和集合
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定长数组-Array"><span class="toc-number">1.1.</span> <span class="toc-text">
+          定长数组-Array
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变长数组-ArrayBuffer"><span class="toc-number">1.2.</span> <span class="toc-text">
+          变长数组-ArrayBuffer
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定长集合-List"><span class="toc-number">1.3.</span> <span class="toc-text">
+          定长集合-List
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变长集合-ListBuffer"><span class="toc-number">1.4.</span> <span class="toc-text">
+          变长集合-ListBuffer
+        </span></a></li></ol></li></ol></div></section><!-- ov = overview --><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/avatar2.png" alt="avatar"></div><p class="sidebar-ov-author__p">LRJ</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state__a posts" href="/archives/"><div class="sidebar-ov-state__a--count">40</div><div class="sidebar-ov-state__a--name">Archives</div></a><a class="sidebar-ov-state__a categories" href="/categories/"><div class="sidebar-ov-state__a--count">17</div><div class="sidebar-ov-state__a--name">Categories</div></a><a class="sidebar-ov-state__a tags" href="/tags/"><div class="sidebar-ov-state__a--count">28</div><div class="sidebar-ov-state__a--name">Tags</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span>You have read </span><span class="sidebar-reading-info-num">0</span></div><div class="sidebar-reading-line"></div></div></div></aside><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright &copy; 2020</span><span class="fa fa-heart footer-icon"></span><span>LRJ.</span></div><div><span>Powered by <a href="http://hexo.io/" title="hexo" target="_blank" rel="noopener">hexo</a></span><span> v4.2.0.</span><span class="separator">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="stun" target="_blank" rel="noopener">stun</a></span><span> v1.7.0.</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="progress"></div></div><div class="back2top" id="back2top"><i class="back2top-icon fa fa-rocket"></i></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=1.7.0"></script><script src="/js/stun-boot.js?v=1.7.0"></script><script src="/js/scroll.js?v=1.7.0"></script><script src="/js/header.js?v=1.7.0"></script><script src="/js/sidebar.js?v=1.7.0"></script></body></html>

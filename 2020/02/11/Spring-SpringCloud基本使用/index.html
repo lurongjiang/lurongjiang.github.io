@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="keywords" content="LRJ, Blog"><meta name="description" content="个人博客,记录成长历程"><title>SpringCloud概述</title><link rel="icon" href="/images/icons/favicon-16x16.png?v=1.7.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=1.7.0" type="image/png" sizes="32x32"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=1.7.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontawesome: {"prefix":"fa"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  post_widget: {"end_text":true},
+  night_mode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","word_wrap":false},
+  reward: false,
+  fancybox: false,
+  zoom_image: {"enable":true,"mask_color":"rgba(0,0,0,0.6)"},
+  gallery_waterfall: undefined,
+  lazyload: undefined,
+  pjax: undefined,
+  external_link: {"icon":{"enable":true,"name":"external-link"}},
+  shortcuts: undefined,
+  prompt: {"copy_success":"Copy Success","copy_error":"Copy Error","creative_commons":"Creative Commons","copy_button":"Copy"}
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-btn fa fa-bars"></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/"><i class="fa fa-home"></i>Home</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/archives/"><i class="fa fa-folder-open"></i>Archives</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/categories/"><i class="fa fa-th"></i>Categories</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/tags/"><i class="fa fa-tags"></i>Tags</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/about/"><i class="fa fa-user"></i>About</a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-info"><div class="header-info-inner"><div class="header-info-title">Blog</div><div class="header-info-subtitle">个人博客,记录成长历程</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content"><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-header-title">SpringCloud概述</h1><div class="post-header-meta"><span class="post-header-meta-create"><i class="fa fa-calendar-o"></i><span>Posted </span><span>2020-02-11</span></span><span class="post-header-meta-update"><i class="fa fa-calendar-check-o"></i><span>updated </span><span>2020-02-14</span></span></div></header><div class="post-body">
+        <h1   id="SpringCloud" >
+          <span class="heading-link">SpringCloud</span>
+        </h1>
+      
+        <h2   id="SpringCloud概述" >
+          <span class="heading-link">SpringCloud概述</span>
+        </h2>
+      
+        <h3   id="官网" >
+          <span class="heading-link">官网</span>
+        </h3>
+      <ul>
+<li><span class="external-link"><a   href="https://spring.io/projects/spring-cloud"  target="_blank" rel="noopener">官网</a><i class="fa fa-external-link"></i></span></li>
+</ul>
+
+        <h3   id="主要功能" >
+          <span class="heading-link">主要功能</span>
+        </h3>
+      <p><img src="/images/image/image-20200207192330288.png" alt="img"></p>
+
+        <h3   id="常用子项目" >
+          <span class="heading-link">常用子项目</span>
+        </h3>
+      <p><img src="/images/image/image-20200207192553245.png" alt="img"></p>
+
+        <h3   id="版本与兼容" >
+          <span class="heading-link">版本与兼容</span>
+        </h3>
+      <ul>
+<li><p>SpringCloud的版本命名</p>
+<ul>
+<li><p><strong>版本命名</strong></p>
+<p>SpringCloud的版本,前半部分(如Hoxton,Greenwich),意思是发布列车(ReleaseTrain),以伦敦地铁的站名命名,因为SpringCloud有很多的子项目,每个项目都有自己的版本管理,按照发布顺序以A,B,C等为首字母依次命名,已经发布的版本顺序为:</p>
+</li>
+</ul>
+<p><code>Angel -&gt; Brixton -&gt; Camden -&gt; Dalston -&gt; Edgware -&gt; Finchley -&gt; Greenwich -&gt; Hoxton</code><br><img src="/images/image/londontuberail-1.png" alt="img"></p>
+</li>
+</ul>
+<p>  后半部分(如SR,SR1,SR2),意思是服务发布(ServiceRelease),即重大Bug修复</p>
+<ul>
+<li><p><strong>版本发布流程</strong></p>
+<p><code>SNAPSHOT -&gt; Mx -&gt; RELEASE -&gt; SRx</code>,其中x就是一些数字序号,例如M1,M2,SR1,SR2.SNAPSHOT为快照版本(开发版本),Mx为里程碑版本,此时并不是正式版本,但是已经接近正式版,经过多个版本迭代之后,发布第一个RELEASE版本,正式版本;在RELEASE版本之后如果有重大bug修复就会发布SR版本</p>
+</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th>Hoxton SR1 <strong>CURRENT</strong> <strong>GA</strong></th>
+<th><span class="external-link"><a   href="https://cloud.spring.io/spring-cloud-static/Hoxton.SR1/reference/html/spring-cloud.html"  target="_blank" rel="noopener"> Reference Doc.</a><i class="fa fa-external-link"></i></span></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hoxton <strong>SNAPSHOT</strong></td>
+<td><span class="external-link"><a   href="https://spring.io/projects/spring-cloud"  target="_blank" rel="noopener"> Reference Doc.</a><i class="fa fa-external-link"></i></span></td>
+</tr>
+<tr>
+<td>Greenwich SR5 <strong>GA</strong></td>
+<td><span class="external-link"><a   href="https://cloud.spring.io/spring-cloud-static/Greenwich.SR5/"  target="_blank" rel="noopener"> Reference Doc.</a><i class="fa fa-external-link"></i></span></td>
+</tr>
+<tr>
+<td>Greenwich <strong>SNAPSHOT</strong></td>
+<td><span class="external-link"><a   href="https://spring.io/projects/spring-cloud"  target="_blank" rel="noopener"> Reference Doc.</a><i class="fa fa-external-link"></i></span></td>
+</tr>
+</tbody></table></div>
+<hr>
+<ul>
+<li><p>SpringCloud的版本生命周期</p>
+<ul>
+<li><p><strong>版本发布规划</strong></p>
+<p><span class="external-link"><a   href="https://github.com/spring-cloud/spring-cloud-release/milestones"  target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-release/milestones</a><i class="fa fa-external-link"></i></span></p>
+</li>
+<li><p><strong>版本发布记录</strong></p>
+<p><span class="external-link"><a   href="https://github.com/spring-cloud/spring-cloud-release/releases"  target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-release/releases</a><i class="fa fa-external-link"></i></span></p>
+</li>
+<li><p><strong>版本终止声明</strong></p>
+<p><span class="external-link"><a   href="https://spring.io/projects/spring-cloud#overview"  target="_blank" rel="noopener">https://spring.io/projects/spring-cloud#overview</a><i class="fa fa-external-link"></i></span></p>
+</li>
+</ul>
+</li>
+<li><p>SpringBoot与SpringCloud的兼容性</p>
+<ul>
+<li>版本兼容性非常重要<br><span class="external-link"><a   href="https://spring.io/projects/spring-cloud#overview"  target="_blank" rel="noopener">https://spring.io/projects/spring-cloud#overview</a><i class="fa fa-external-link"></i></span></li>
+</ul>
+</li>
+</ul>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th>Release Train</th>
+<th>Boot Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hoxton</td>
+<td>2.2.x</td>
+</tr>
+<tr>
+<td>Greenwich</td>
+<td>2.1.x</td>
+</tr>
+<tr>
+<td>Finchley</td>
+<td>2.0.x</td>
+</tr>
+<tr>
+<td>Edgware</td>
+<td>1.5.x</td>
+</tr>
+<tr>
+<td>Dalston</td>
+<td>1.5.x</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li>生产环境如何选择选择<ul>
+<li>坚决不适用非稳定版本</li>
+<li>坚决不适用end-of-life版本</li>
+<li>尽量使用最新版本<ul>
+<li>RELEASE版本可以观望/调研,因为是第一个正式版,并没有在生产上得以广泛应用</li>
+<li>SR2之后可以大规模使用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        <h3   id="版本选择" >
+          <span class="heading-link">版本选择</span>
+        </h3>
+      <ul>
+<li>SpringCloud Hoxton SR1</li>
+<li>SpringBoot 2.2.4.RELEASE</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>Hoxton.SR1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<p>检查项目是否能运行</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install -U</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2   id="SpringCloud服务注册与发现" >
+          <span class="heading-link">SpringCloud服务注册与发现</span>
+        </h2>
+      <ul>
+<li>使得服务消费者总能找到服务提供者</li>
+</ul>
+
+        <h3   id="Consul单机版安装" >
+          <span class="heading-link">Consul单机版安装</span>
+        </h3>
+      
+        <h4   id="Consul下载" >
+          <span class="heading-link">Consul下载</span>
+        </h4>
+      <ul>
+<li>下载Consoule <span class="external-link"><a   href="https://releases.hashicorp.com/consul/1.6.3/consul_1.6.3_linux_amd64.zip"  target="_blank" rel="noopener">https://releases.hashicorp.com/consul/1.6.3/consul_1.6.3_linux_amd64.zip</a><i class="fa fa-external-link"></i></span></li>
+</ul>
+
+        <h4   id="需要的端口" >
+          <span class="heading-link">需要的端口</span>
+        </h4>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">Use</th>
+<th align="left">Default Ports</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DNS: The DNS server (TCP and UDP)</td>
+<td align="left">8600</td>
+</tr>
+<tr>
+<td align="left">HTTP: The HTTP API (TCP Only)</td>
+<td align="left">8500</td>
+</tr>
+<tr>
+<td align="left">HTTPS: The HTTPs API</td>
+<td align="left">disabled (8501)*</td>
+</tr>
+<tr>
+<td align="left">gRPC: The gRPC API</td>
+<td align="left">disabled (8502)*</td>
+</tr>
+<tr>
+<td align="left">LAN Serf: The Serf LAN port (TCP and UDP)</td>
+<td align="left">8301</td>
+</tr>
+<tr>
+<td align="left">Wan Serf: The Serf WAN port TCP and UDP)</td>
+<td align="left">8302</td>
+</tr>
+<tr>
+<td align="left">server: Server RPC address (TCP Only)</td>
+<td align="left">8300</td>
+</tr>
+<tr>
+<td align="left">Sidecar Proxy Min: Inclusive min port number to use for automatically assigned sidecar service registrations.</td>
+<td align="left">21000</td>
+</tr>
+<tr>
+<td align="left">Sidecar Proxy Max: Inclusive max port number to use for automatically assigned sidecar service registrations.</td>
+<td align="left">21255</td>
+</tr>
+</tbody></table></div>
+<p>检查端口是否被占用的方法</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Windows:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果没有结果说明没有被占用</span></span><br><span class="line">netstat -ano| findstr "8500"</span><br><span class="line"></span><br><span class="line">Linux:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果没有结果说明没有被占用</span></span><br><span class="line">netstat -antp |grep 8500</span><br><span class="line"></span><br><span class="line">macOS:</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果没有结果说明没有被占用</span></span><br><span class="line">netstat -ant | grep 8500</span><br><span class="line">或</span><br><span class="line">lsof -i:8500</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="安装和启动" >
+          <span class="heading-link">安装和启动</span>
+        </h4>
+      <ul>
+<li>解压</li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./consul agent -dev -client 0.0.0.0</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>严重是否成功</li>
+</ul>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./consul -v</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>访问Consul首页<code>localhost:8500</code></li>
+</ul>
+<p><strong>启动参数</strong></p>
+<ul>
+<li>-ui 开启ui</li>
+<li>-client 让consul拥有client功能,接受服务注册;0.0.0.0允许任意ip注册,不写只能使用localhost连接</li>
+<li>-dev 以开发模式运行consul</li>
+</ul>
+
+        <h3   id="整合Consul" >
+          <span class="heading-link">整合Consul</span>
+        </h3>
+      <ul>
+<li><p>添加依赖</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>配置</p>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"> <span class="attr">application:</span></span><br><span class="line">    <span class="comment"># 指定注册到consul的服务名称,分隔符不能是下划线</span></span><br><span class="line">    <span class="comment"># 如果服务发现组件是Consul,会强制转换成中划线,导致找不到服务</span></span><br><span class="line">    <span class="comment"># 如果服务发现组件是Ribbon,则因为Ribbon的问题(把默认名称当初虚拟主机名,而虚拟主机名不能用下划线),会造成微服务之间无法调用</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">micro-service-user</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.238</span><span class="number">.128</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>启动,检查consul ui的服务上线情况</p>
+</li>
+</ul>
+
+        <h3   id="Consul健康检查" >
+          <span class="heading-link">Consul健康检查</span>
+        </h3>
+      <p><img src="/images/image/image-20200207231837317.png" alt="img"></p>
+<ul>
+<li>添加健康检查依赖</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li><p>配置</p>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span> <span class="string">'*'</span></span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>端点</p>
+<p><span class="external-link"><a   href="http://localhost:8080/actuator"  target="_blank" rel="noopener">http://localhost:8080/actuator</a><i class="fa fa-external-link"></i></span> 查看端点</p>
+<p><span class="external-link"><a   href="http://localhost:8080/actuator/health"  target="_blank" rel="noopener">http://localhost:8080/actuator/health</a><i class="fa fa-external-link"></i></span> 健康检查</p>
+<p>添加详情配置,可以检查详细的健康情况</p>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">management:</span></span><br><span class="line">    <span class="attr">endpoint:</span></span><br><span class="line">      <span class="attr">health:</span></span><br><span class="line">        <span class="attr">show-details:</span> <span class="string">always</span></span><br></pre></td></tr></table></div></figure>
+
+<p><img src="/images/image/image-20200207233909996.png" alt="img"></p>
+</li>
+</ul>
+<ul>
+<li><p>简单研究一下健康检查的源码</p>
+<p>以磁盘检查的为例</p>
+<p>健康检查的类都继承了<code>AbstractHealthIndicator</code>抽象类,而<code>AbstractHealthIndicator</code>实现了<code>HealthIndicator</code>接口,所有健康检查实现类都必须实现<code>doHealthCheck(Health.Builder builder)</code>方法</p>
+</li>
+</ul>
+<p><img src="/images/image/image-20200207235333557.png" alt="img"></p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiskSpaceHealthIndicator</span> <span class="keyword">extends</span> <span class="title">AbstractHealthIndicator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Log logger = LogFactory.getLog(DiskSpaceHealthIndicator<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> File path;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> DataSize threshold;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Create a new &#123;<span class="doctag">@code</span> DiskSpaceHealthIndicator&#125; instance.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> path the Path used to compute the available disk space</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> threshold the minimum disk space that should be available</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DiskSpaceHealthIndicator</span><span class="params">(File path, DataSize threshold)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(<span class="string">"DiskSpace health check failed"</span>);</span><br><span class="line">		<span class="keyword">this</span>.path = path;</span><br><span class="line">		<span class="keyword">this</span>.threshold = threshold;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doHealthCheck</span><span class="params">(Health.Builder builder)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//获取可用的空间字节数</span></span><br><span class="line">		<span class="keyword">long</span> diskFreeInBytes = <span class="keyword">this</span>.path.getUsableSpace();</span><br><span class="line">        <span class="comment">//如果可用的字节数大于预留字节数阈值则认为是健康的,设置status为UP</span></span><br><span class="line">		<span class="keyword">if</span> (diskFreeInBytes &gt;= <span class="keyword">this</span>.threshold.toBytes()) &#123;</span><br><span class="line">			builder.up();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//否则任务是不健康的,设置status为DOWN</span></span><br><span class="line">			logger.warn(LogMessage.format(<span class="string">"Free disk space below threshold. Available: %d bytes (threshold: %s)"</span>,</span><br><span class="line">					diskFreeInBytes, <span class="keyword">this</span>.threshold));</span><br><span class="line">			builder.down();</span><br><span class="line">		&#125;</span><br><span class="line">        <span class="comment">//输出总空间,可用空间和预留阈值</span></span><br><span class="line">		builder.withDetail(<span class="string">"total"</span>, <span class="keyword">this</span>.path.getTotalSpace()).withDetail(<span class="string">"free"</span>, diskFreeInBytes)</span><br><span class="line">				.withDetail(<span class="string">"threshold"</span>, <span class="keyword">this</span>.threshold.toBytes());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这个获取可用字节数还是挺好的,直接利用了File提供的方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getUsableSpace</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SecurityManager sm = System.getSecurityManager();</span><br><span class="line">    <span class="keyword">if</span> (sm != <span class="keyword">null</span>) &#123;</span><br><span class="line">        sm.checkPermission(<span class="keyword">new</span> RuntimePermission(<span class="string">"getFileSystemAttributes"</span>));</span><br><span class="line">        sm.checkRead(path);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isInvalid()) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0L</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//fs是默认的文件系统FileSystem fs = DefaultFileSystem.getFileSystem();</span></span><br><span class="line">    <span class="keyword">return</span> fs.getSpace(<span class="keyword">this</span>, FileSystem.SPACE_USABLE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>健康检查使用了建造者模式,对于不同的健康指标非常方便,值得学习<br><img src="/images/image/image-20200208000623044.png" alt="img"></p>
+<ul>
+<li><p>整合Consul和SpringCloud的actuator</p>
+<p>修改配置</p>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">cloud:</span></span><br><span class="line">      <span class="attr">consul:</span></span><br><span class="line">        <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.238</span><span class="number">.128</span></span><br><span class="line">        <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">        <span class="attr">discovery:</span></span><br><span class="line">          <span class="attr">health-check-path:</span> <span class="string">/actuator/health</span></span><br></pre></td></tr></table></div></figure>
+
+</li>
+</ul>
+<p>这样启动之后,再检查consul ui就可以发现没有红色的叉了<br><img src="/images/image/image-20200208001532048.png" alt="img"></p>
+<p>其他的健康检查配置<br><img src="/images/image/image-20200208001745953.png" alt="img"></p>
+
+        <h3   id="注册课程微服务到Consul" >
+          <span class="heading-link">注册课程微服务到Consul</span>
+        </h3>
+      <ul>
+<li>添加依赖</li>
+</ul>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-consul-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>配置</li>
+</ul>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://192.168.238.128:3306/ms?serverTimezone=GMT%2B8&amp;characterEncoding=utf8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">hikari:</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">lrj</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">lu11221015</span></span><br><span class="line">      <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="comment"># JPA配置</span></span><br><span class="line">  <span class="attr">jpa:</span></span><br><span class="line">    <span class="attr">hibernate:</span></span><br><span class="line">      <span class="attr">ddl-auto:</span> <span class="string">update</span></span><br><span class="line">    <span class="attr">show-sql:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">micro-service-class</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.238</span><span class="number">.128</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">health-check-path:</span> <span class="string">/actuator/health</span></span><br><span class="line"><span class="comment"># 暴露所有的actuator端点</span></span><br><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span> <span class="string">'*'</span></span><br><span class="line">  <span class="comment"># 开启健康检查详细信息</span></span><br><span class="line">  <span class="attr">endpoint:</span></span><br><span class="line">    <span class="attr">health:</span></span><br><span class="line">      <span class="attr">show-details:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>重构用户微服务</li>
+</ul>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"user"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">findUserById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Integer id) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userService.findUserById(id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"discoveryTest"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">discoveryTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> discoveryClient.getInstances(<span class="string">"micro-service-class"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>访问端点,可以发现不需要指定课程微服务的主机和端口就可以拿到相关信息,实现了服务发现<br><img src="/images/image/image-20200208003543107.png" alt="img"></li>
+</ul>
+
+        <h3   id="重构课程微服务" >
+          <span class="heading-link">重构课程微服务</span>
+        </h3>
+      <ul>
+<li><p>原来</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LessonServiceImpl</span> <span class="keyword">implements</span> <span class="title">LessonService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> LessonRepository lessonRepository;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> LessonUserRepository lessonUserRepository;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Lesson <span class="title">buyById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 根据课程id查询课程</span></span><br><span class="line">        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -&gt; <span class="keyword">new</span> IllegalArgumentException(<span class="string">"该课程不存在"</span>));</span><br><span class="line">        <span class="comment">//根据课程查询是否已经购买过</span></span><br><span class="line">        LessonUser lessonUser = lessonUserRepository.findByLessonId(id);</span><br><span class="line">        <span class="keyword">if</span> (lessonUser != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> lesson;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//todo 2.登录之后获取userId</span></span><br><span class="line">        String userId = <span class="string">"1"</span>;</span><br><span class="line">        <span class="comment">// 3. 如果没有购买过,查询用户余额</span></span><br><span class="line">        UserDTO userDTO = restTemplate.getForObject(<span class="string">"http://localhost:8080/user/&#123;userId&#125;"</span>, UserDTO<span class="class">.<span class="keyword">class</span>, <span class="title">userId</span>)</span>;</span><br><span class="line">        <span class="keyword">if</span> (userDTO != <span class="keyword">null</span> &amp;&amp; userDTO.getMoney() != <span class="keyword">null</span> &amp;&amp;</span><br><span class="line">                userDTO.getMoney().subtract(lesson.getPrice()).doubleValue() &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"余额不足"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4. 购买逻辑</span></span><br><span class="line">        <span class="comment">//todo 4.1.调用微服务金额扣减接口 4.2.向lesson_user表插入记录</span></span><br><span class="line">        <span class="keyword">return</span> lesson;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>这个写死了主机地址,无法动态获取微服务路径</p>
+</li>
+<li><p>重构</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LessonServiceImpl</span> <span class="keyword">implements</span> <span class="title">LessonService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> LessonRepository lessonRepository;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> LessonUserRepository lessonUserRepository;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Lesson <span class="title">buyById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 根据课程id查询课程</span></span><br><span class="line">        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -&gt; <span class="keyword">new</span> IllegalArgumentException(<span class="string">"该课程不存在"</span>));</span><br><span class="line">        <span class="comment">//根据课程查询是否已经购买过</span></span><br><span class="line">        LessonUser lessonUser = lessonUserRepository.findByLessonId(id);</span><br><span class="line">        <span class="keyword">if</span> (lessonUser != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> lesson;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//todo 2.登录之后获取userId</span></span><br><span class="line">        String userId = <span class="string">"1"</span>;</span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">"micro-service-user"</span>);</span><br><span class="line">        <span class="keyword">if</span> (instances != <span class="keyword">null</span> &amp;&amp; !instances.isEmpty()) &#123;</span><br><span class="line">            <span class="comment">//todo 需要改进,如果存在多个实例,需要考虑负载均衡</span></span><br><span class="line">            ServiceInstance instance = instances.get(<span class="number">0</span>);</span><br><span class="line">            URI uri = instance.getUri();</span><br><span class="line">            UserDTO userDTO = restTemplate.getForObject(uri + <span class="string">"/user/&#123;userId&#125;"</span>, UserDTO<span class="class">.<span class="keyword">class</span>, <span class="title">userId</span>)</span>;</span><br><span class="line">            <span class="keyword">if</span> (userDTO != <span class="keyword">null</span> &amp;&amp; userDTO.getMoney() != <span class="keyword">null</span> &amp;&amp;</span><br><span class="line">                    userDTO.getMoney().subtract(lesson.getPrice()).doubleValue() &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"余额不足"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//4. 购买逻辑</span></span><br><span class="line">            <span class="comment">//todo 4.1.调用微服务金额扣减接口 4.2.向lesson_user表插入记录</span></span><br><span class="line">            <span class="keyword">return</span> lesson;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"用户微服务异常,无法购买课程"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>可以动态的获取到用户微服务的地址,请求正常<br><img src="/images/image/image-20200208004838563.png" alt="img"></p>
+</li>
+</ul>
+
+        <h3   id="元数据" >
+          <span class="heading-link">元数据</span>
+        </h3>
+      <p>Consul是没有元数据的概念的,所以SpringCloud做了个适配,在consul下设置tags作为元数据.</p>
+<p>元数据可以对微服务添加描述,标识,例如机房在哪里,这样可以进行就近判断,或者当就近机房不可用时才检查远程机房,当两者都不可用时才认为服务不可用等实现容灾或者跨机房</p>
+<ul>
+<li><p>配置</p>
+<figure class="highlight yml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">consul:</span></span><br><span class="line">      <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.238</span><span class="number">.128</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">8500</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">health-check-path:</span> <span class="string">/actuator/health</span></span><br><span class="line">        <span class="attr">tags:</span> <span class="string">JiFang=Beijing,JiFang=Shanghai</span></span><br></pre></td></tr></table></div></figure>
+</li>
+<li><p>实现机房选择</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"discoveryTest"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">discoveryTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">"micro-service-class"</span>);</span><br><span class="line">    <span class="keyword">if</span> (instances != <span class="keyword">null</span>) &#123;</span><br><span class="line">        List&lt;ServiceInstance&gt; shanghaiInstances = instances.stream()</span><br><span class="line">                .filter(s -&gt; s.getMetadata().containsKey(<span class="string">"Shanghai"</span>)).collect(Collectors.toList());</span><br><span class="line">        <span class="keyword">if</span> (!shanghaiInstances.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">return</span> shanghaiInstances;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instances;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+</div><footer class="post-footer"><div class="post-end"><p><span>------ </span><span>End of the article, thanks for your reading</span><span> ------</span></p></div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-author-name">Author: </span><span class="post-copyright-author-value"><a href="https://lurongjiang.github.io">LRJ</a></span></div><div class="post-copyright-link"><span class="post-copyright-link-name">Link: </span><span class="post-copyright-link-value"><a href="https://lurongjiang.github.io/2020/02/11/Spring-SpringCloud%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">https://lurongjiang.github.io/2020/02/11/Spring-SpringCloud%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-notice-name">Copyright: </span><span class="post-copyright-notice-value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/SpringCloud/">SpringCloud</a></span></div><nav class="paginator"><div class="paginator-post"><div class="paginator-post-prev"><a href="/2020/02/20/Spring-SpringSecurity%E5%88%9B%E5%BB%BAToken%E7%9A%84%E6%BA%90%E7%A0%81%E8%B7%9F%E8%B8%AA/"><i class="fa fa-chevron-left"></i><span>SpringSecurity获取Token源码</span></a></div><div class="paginator-post-next"><a href="/2020/01/26/Spring-Bean%E7%9A%84%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B/"><span>Spring解析xml成BeanDefinition的过程</span><i class="fa fa-chevron-right"></i></a></div></div></nav></footer></div></div></div><aside class="sidebar" id="sidebar"><div class="sidebar-inner"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringCloud"><span class="toc-number">1.</span> <span class="toc-text">
+          SpringCloud
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringCloud概述"><span class="toc-number">1.1.</span> <span class="toc-text">
+          SpringCloud概述
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#官网"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          官网
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要功能"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+          主要功能
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用子项目"><span class="toc-number">1.1.3.</span> <span class="toc-text">
+          常用子项目
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本与兼容"><span class="toc-number">1.1.4.</span> <span class="toc-text">
+          版本与兼容
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本选择"><span class="toc-number">1.1.5.</span> <span class="toc-text">
+          版本选择
+        </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringCloud服务注册与发现"><span class="toc-number">1.2.</span> <span class="toc-text">
+          SpringCloud服务注册与发现
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Consul单机版安装"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+          Consul单机版安装
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Consul下载"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">
+          Consul下载
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#需要的端口"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">
+          需要的端口
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装和启动"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">
+          安装和启动
+        </span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整合Consul"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+          整合Consul
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Consul健康检查"><span class="toc-number">1.2.3.</span> <span class="toc-text">
+          Consul健康检查
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册课程微服务到Consul"><span class="toc-number">1.2.4.</span> <span class="toc-text">
+          注册课程微服务到Consul
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重构课程微服务"><span class="toc-number">1.2.5.</span> <span class="toc-text">
+          重构课程微服务
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元数据"><span class="toc-number">1.2.6.</span> <span class="toc-text">
+          元数据
+        </span></a></li></ol></li></ol></li></ol></div></section><!-- ov = overview --><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/avatar2.png" alt="avatar"></div><p class="sidebar-ov-author__p">LRJ</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state__a posts" href="/archives/"><div class="sidebar-ov-state__a--count">40</div><div class="sidebar-ov-state__a--name">Archives</div></a><a class="sidebar-ov-state__a categories" href="/categories/"><div class="sidebar-ov-state__a--count">17</div><div class="sidebar-ov-state__a--name">Categories</div></a><a class="sidebar-ov-state__a tags" href="/tags/"><div class="sidebar-ov-state__a--count">28</div><div class="sidebar-ov-state__a--name">Tags</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span>You have read </span><span class="sidebar-reading-info-num">0</span></div><div class="sidebar-reading-line"></div></div></div></aside><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright &copy; 2020</span><span class="fa fa-heart footer-icon"></span><span>LRJ.</span></div><div><span>Powered by <a href="http://hexo.io/" title="hexo" target="_blank" rel="noopener">hexo</a></span><span> v4.2.0.</span><span class="separator">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="stun" target="_blank" rel="noopener">stun</a></span><span> v1.7.0.</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="progress"></div></div><div class="back2top" id="back2top"><i class="back2top-icon fa fa-rocket"></i></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=1.7.0"></script><script src="/js/stun-boot.js?v=1.7.0"></script><script src="/js/scroll.js?v=1.7.0"></script><script src="/js/header.js?v=1.7.0"></script><script src="/js/sidebar.js?v=1.7.0"></script></body></html>

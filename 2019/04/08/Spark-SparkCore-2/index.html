@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="keywords" content="LRJ, Blog"><meta name="description" content="个人博客,记录成长历程"><title>SparkCore基础-Action</title><link rel="icon" href="/images/icons/favicon-16x16.png?v=1.7.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=1.7.0" type="image/png" sizes="32x32"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=1.7.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontawesome: {"prefix":"fa"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  post_widget: {"end_text":true},
+  night_mode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","word_wrap":false},
+  reward: false,
+  fancybox: false,
+  zoom_image: {"enable":true,"mask_color":"rgba(0,0,0,0.6)"},
+  gallery_waterfall: undefined,
+  lazyload: undefined,
+  pjax: undefined,
+  external_link: {"icon":{"enable":true,"name":"external-link"}},
+  shortcuts: undefined,
+  prompt: {"copy_success":"Copy Success","copy_error":"Copy Error","creative_commons":"Creative Commons","copy_button":"Copy"}
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-btn fa fa-bars"></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/"><i class="fa fa-home"></i>Home</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/archives/"><i class="fa fa-folder-open"></i>Archives</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/categories/"><i class="fa fa-th"></i>Categories</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/tags/"><i class="fa fa-tags"></i>Tags</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/about/"><i class="fa fa-user"></i>About</a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-info"><div class="header-info-inner"><div class="header-info-title">Blog</div><div class="header-info-subtitle">个人博客,记录成长历程</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content"><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-header-title">SparkCore基础-Action</h1><div class="post-header-meta"><span class="post-header-meta-create"><i class="fa fa-calendar-o"></i><span>Posted </span><span>2019-04-08</span></span><span class="post-header-meta-update"><i class="fa fa-calendar-check-o"></i><span>updated </span><span>2019-04-11</span></span></div></header><div class="post-body">
+        <h1   id="SparkCore-2" >
+          <span class="heading-link">SparkCore-2</span>
+        </h1>
+      
+        <h3   id="新建工程" >
+          <span class="heading-link">新建工程</span>
+        </h3>
+      <ul>
+<li><p>新建maven父工程</p>
+</li>
+<li><p>新建Module&gt;maven</p>
+<ul>
+<li>core</li>
+<li>streaming</li>
+<li>ml</li>
+<li>hbase</li>
+</ul>
+</li>
+</ul>
+
+        <h2   id="SparkCore" >
+          <span class="heading-link">SparkCore</span>
+        </h2>
+      
+        <h3   id="Transformation" >
+          <span class="heading-link">Transformation</span>
+        </h3>
+      
+        <h4   id="map" >
+          <span class="heading-link">map</span>
+        </h4>
+      <p>迭代每一个元素</p>
+
+        <h4   id="mapPartition" >
+          <span class="heading-link">mapPartition</span>
+        </h4>
+      <p>迭代每个分区</p>
+
+        <h4   id="mapPartitionWithIndex" >
+          <span class="heading-link">mapPartitionWithIndex</span>
+        </h4>
+      
+        <h4   id="grom" >
+          <span class="heading-link">grom</span>
+        </h4>
+      
+        <h4   id="filter" >
+          <span class="heading-link">filter</span>
+        </h4>
+      
+        <h4   id="sample" >
+          <span class="heading-link">sample</span>
+        </h4>
+      <p>取样</p>
+
+        <h4   id="zip" >
+          <span class="heading-link">zip</span>
+        </h4>
+      <p>拉链</p>
+<blockquote>
+<p> 注意点</p>
+<p>spark和scala不同,spark中必须保证:</p>
+<ul>
+<li><p>元素数目相同</p>
+</li>
+<li><p>分区数相同</p>
+</li>
+</ul>
+</blockquote>
+
+        <h4   id="zipWithIndex" >
+          <span class="heading-link">zipWithIndex</span>
+        </h4>
+      
+        <h4   id="union" >
+          <span class="heading-link">union</span>
+        </h4>
+      
+        <h4   id="intersection" >
+          <span class="heading-link">intersection</span>
+        </h4>
+      <p>交集,去重</p>
+
+        <h4   id="substract" >
+          <span class="heading-link">substract</span>
+        </h4>
+      <p>差集,不去重</p>
+
+        <h4   id="cartesian" >
+          <span class="heading-link">cartesian</span>
+        </h4>
+      <p>卡笛尔集</p>
+
+        <h4   id="distinct" >
+          <span class="heading-link">distinct</span>
+        </h4>
+      <p>去重</p>
+<p>分区数不变</p>
+
+        <h4   id="sortBy" >
+          <span class="heading-link">sortBy</span>
+        </h4>
+      
+        <h4   id="sorkByKey" >
+          <span class="heading-link">sorkByKey</span>
+        </h4>
+      <p>KV类型</p>
+
+        <h4   id="groupBy" >
+          <span class="heading-link">groupBy</span>
+        </h4>
+      <p>这个出来的是(key,Interator),需要对iteration的内容进行进一步的处理</p>
+
+        <h4   id="groupByKey" >
+          <span class="heading-link">groupByKey</span>
+        </h4>
+      <p>出来(k,v)</p>
+
+        <h4   id="mapValues" >
+          <span class="heading-link">mapValues</span>
+        </h4>
+      
+        <h4   id="reduceByKey" >
+          <span class="heading-link">reduceByKey</span>
+        </h4>
+      <p>先本地聚合,再shuffle</p>
+
+        <h4   id="join" >
+          <span class="heading-link">join</span>
+        </h4>
+      <p>inner join</p>
+
+        <h4   id="leftOuterJoion" >
+          <span class="heading-link">leftOuterJoion</span>
+        </h4>
+      
+        <h4   id="rightOuterJoin" >
+          <span class="heading-link">rightOuterJoin</span>
+        </h4>
+      
+        <h4   id="fullOutJoin" >
+          <span class="heading-link">fullOutJoin</span>
+        </h4>
+      
+        <h4   id="coalesce" >
+          <span class="heading-link">coalesce</span>
+        </h4>
+      <p>由多变少</p>
+<p>指定第二个参数true之后,可以实现少变多,重新分区1</p>
+
+        <h4   id="repartition" >
+          <span class="heading-link">repartition</span>
+        </h4>
+      <p>遇到shuffle就切分statge</p>
+</div><footer class="post-footer"><div class="post-end"><p><span>------ </span><span>End of the article, thanks for your reading</span><span> ------</span></p></div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-author-name">Author: </span><span class="post-copyright-author-value"><a href="https://lurongjiang.github.io">LRJ</a></span></div><div class="post-copyright-link"><span class="post-copyright-link-name">Link: </span><span class="post-copyright-link-value"><a href="https://lurongjiang.github.io/2019/04/08/Spark-SparkCore-2/">https://lurongjiang.github.io/2019/04/08/Spark-SparkCore-2/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-notice-name">Copyright: </span><span class="post-copyright-notice-value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/Spark/">Spark</a></span><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/SparkCore/">SparkCore</a></span></div><nav class="paginator"><div class="paginator-post"><div class="paginator-post-prev"><a href="/2019/04/15/Spark-Spark%20On%20Yarn/"><i class="fa fa-chevron-left"></i><span>SparkCore基础-Spark On Yarn</span></a></div><div class="paginator-post-next"><a href="/2019/04/07/Spark-SparkCore-action/"><span>SparkCore基础-Action</span><i class="fa fa-chevron-right"></i></a></div></div></nav></footer></div></div></div><aside class="sidebar" id="sidebar"><div class="sidebar-inner"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SparkCore-2"><span class="toc-number">1.</span> <span class="toc-text">
+          SparkCore-2
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建工程"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          新建工程
+        </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SparkCore"><span class="toc-number">1.1.</span> <span class="toc-text">
+          SparkCore
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Transformation"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          Transformation
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">
+          map
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mapPartition"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">
+          mapPartition
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mapPartitionWithIndex"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">
+          mapPartitionWithIndex
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#grom"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">
+          grom
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">
+          filter
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sample"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">
+          sample
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zip"><span class="toc-number">1.1.1.7.</span> <span class="toc-text">
+          zip
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zipWithIndex"><span class="toc-number">1.1.1.8.</span> <span class="toc-text">
+          zipWithIndex
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#union"><span class="toc-number">1.1.1.9.</span> <span class="toc-text">
+          union
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#intersection"><span class="toc-number">1.1.1.10.</span> <span class="toc-text">
+          intersection
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#substract"><span class="toc-number">1.1.1.11.</span> <span class="toc-text">
+          substract
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cartesian"><span class="toc-number">1.1.1.12.</span> <span class="toc-text">
+          cartesian
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#distinct"><span class="toc-number">1.1.1.13.</span> <span class="toc-text">
+          distinct
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sortBy"><span class="toc-number">1.1.1.14.</span> <span class="toc-text">
+          sortBy
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sorkByKey"><span class="toc-number">1.1.1.15.</span> <span class="toc-text">
+          sorkByKey
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupBy"><span class="toc-number">1.1.1.16.</span> <span class="toc-text">
+          groupBy
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#groupByKey"><span class="toc-number">1.1.1.17.</span> <span class="toc-text">
+          groupByKey
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mapValues"><span class="toc-number">1.1.1.18.</span> <span class="toc-text">
+          mapValues
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reduceByKey"><span class="toc-number">1.1.1.19.</span> <span class="toc-text">
+          reduceByKey
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#join"><span class="toc-number">1.1.1.20.</span> <span class="toc-text">
+          join
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#leftOuterJoion"><span class="toc-number">1.1.1.21.</span> <span class="toc-text">
+          leftOuterJoion
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rightOuterJoin"><span class="toc-number">1.1.1.22.</span> <span class="toc-text">
+          rightOuterJoin
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fullOutJoin"><span class="toc-number">1.1.1.23.</span> <span class="toc-text">
+          fullOutJoin
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#coalesce"><span class="toc-number">1.1.1.24.</span> <span class="toc-text">
+          coalesce
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#repartition"><span class="toc-number">1.1.1.25.</span> <span class="toc-text">
+          repartition
+        </span></a></li></ol></li></ol></li></ol></li></ol></div></section><!-- ov = overview --><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/avatar2.png" alt="avatar"></div><p class="sidebar-ov-author__p">LRJ</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state__a posts" href="/archives/"><div class="sidebar-ov-state__a--count">40</div><div class="sidebar-ov-state__a--name">Archives</div></a><a class="sidebar-ov-state__a categories" href="/categories/"><div class="sidebar-ov-state__a--count">17</div><div class="sidebar-ov-state__a--name">Categories</div></a><a class="sidebar-ov-state__a tags" href="/tags/"><div class="sidebar-ov-state__a--count">28</div><div class="sidebar-ov-state__a--name">Tags</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span>You have read </span><span class="sidebar-reading-info-num">0</span></div><div class="sidebar-reading-line"></div></div></div></aside><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright &copy; 2020</span><span class="fa fa-heart footer-icon"></span><span>LRJ.</span></div><div><span>Powered by <a href="http://hexo.io/" title="hexo" target="_blank" rel="noopener">hexo</a></span><span> v4.2.0.</span><span class="separator">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="stun" target="_blank" rel="noopener">stun</a></span><span> v1.7.0.</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="progress"></div></div><div class="back2top" id="back2top"><i class="back2top-icon fa fa-rocket"></i></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=1.7.0"></script><script src="/js/stun-boot.js?v=1.7.0"></script><script src="/js/scroll.js?v=1.7.0"></script><script src="/js/header.js?v=1.7.0"></script><script src="/js/sidebar.js?v=1.7.0"></script></body></html>

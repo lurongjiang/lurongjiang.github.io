@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="keywords" content="LRJ, Blog"><meta name="description" content="个人博客,记录成长历程"><title>SparkSQL基础-Spark SQL-Source</title><link rel="icon" href="/images/icons/favicon-16x16.png?v=1.7.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=1.7.0" type="image/png" sizes="32x32"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=1.7.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontawesome: {"prefix":"fa"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  post_widget: {"end_text":true},
+  night_mode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","word_wrap":false},
+  reward: false,
+  fancybox: false,
+  zoom_image: {"enable":true,"mask_color":"rgba(0,0,0,0.6)"},
+  gallery_waterfall: undefined,
+  lazyload: undefined,
+  pjax: undefined,
+  external_link: {"icon":{"enable":true,"name":"external-link"}},
+  shortcuts: undefined,
+  prompt: {"copy_success":"Copy Success","copy_error":"Copy Error","creative_commons":"Creative Commons","copy_button":"Copy"}
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-btn fa fa-bars"></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/"><i class="fa fa-home"></i>Home</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/archives/"><i class="fa fa-folder-open"></i>Archives</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/categories/"><i class="fa fa-th"></i>Categories</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/tags/"><i class="fa fa-tags"></i>Tags</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/about/"><i class="fa fa-user"></i>About</a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-info"><div class="header-info-inner"><div class="header-info-title">Blog</div><div class="header-info-subtitle">个人博客,记录成长历程</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content"><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-header-title">SparkSQL基础-Spark SQL-Source</h1><div class="post-header-meta"><span class="post-header-meta-create"><i class="fa fa-calendar-o"></i><span>Posted </span><span>2019-04-28</span></span><span class="post-header-meta-update"><i class="fa fa-calendar-check-o"></i><span>updated </span><span>2019-04-30</span></span></div></header><div class="post-body">
+        <h1   id="SparkSQL-Source" >
+          <span class="heading-link">SparkSQL-Source</span>
+        </h1>
+      
+        <h2   id="JSON文件" >
+          <span class="heading-link">JSON文件</span>
+        </h2>
+      
+        <h3   id="读取" >
+          <span class="heading-link">读取</span>
+        </h3>
+      <ul>
+<li>sparkSession.read.format(“json”).load(path)</li>
+<li>sparkSession.read.json(path)</li>
+</ul>
+<p>准备一份数据</p>
+<figure class="highlight json"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"name"</span>:<span class="string">"zhangsan"</span>,<span class="attr">"age"</span>:<span class="number">18</span>,<span class="attr">"sex"</span>:<span class="string">"male"</span>&#125;</span><br><span class="line">&#123;<span class="attr">"name"</span>:<span class="string">"lisi"</span>,<span class="attr">"age"</span>:<span class="number">32</span>,<span class="attr">"sex"</span>:<span class="string">"female"</span>&#125;</span><br><span class="line">&#123;<span class="attr">"name"</span>:<span class="string">"wangwu"</span>,<span class="attr">"age"</span>:<span class="number">45</span>,<span class="attr">"sex"</span>:<span class="string">"male"</span>&#125;</span><br><span class="line">&#123;<span class="attr">"name"</span>:<span class="string">"zhaoliu"</span>,<span class="attr">"age"</span>:<span class="number">87</span>,<span class="attr">"sex"</span>:<span class="string">"male"</span>&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>程序</p>
+
+        <h4   id="read-format-“json”-load-path" >
+          <span class="heading-link">read.format(“json”).load(path)</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">JsonSourceTest</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="comment">//创建SparkSession</span></span><br><span class="line">    <span class="keyword">val</span> spark = <span class="type">SparkSession</span>.builder()</span><br><span class="line">      .appName(<span class="string">"JsonSource"</span>)</span><br><span class="line">      .master(<span class="string">"local"</span>)</span><br><span class="line">      .getOrCreate()</span><br><span class="line">    <span class="comment">//readJson1(spark)</span></span><br><span class="line">    readJson2(spark)</span><br><span class="line">    spark.close()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">readJson1</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">    <span class="keyword">val</span> df = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"input/json.txt"</span>)</span><br><span class="line">    df.printSchema()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="sparkSession-read-json-path" >
+          <span class="heading-link">sparkSession.read.json(path)</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readJson2</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">    <span class="keyword">val</span> df = spark.read.json(<span class="string">"input/json.txt"</span>)</span><br><span class="line">    df.printSchema()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>输出</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line"> |-- age: long (nullable &#x3D; true)</span><br><span class="line"> |-- name: string (nullable &#x3D; true)</span><br><span class="line"> |-- sex: string (nullable &#x3D; true)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="部分字段-select" >
+          <span class="heading-link">部分字段 select</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readJson3</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"input/json.txt"</span>)</span><br><span class="line">  df.printSchema()</span><br><span class="line">  <span class="comment">//选择部分列</span></span><br><span class="line">  df.select(<span class="string">"name"</span>,<span class="string">"sex"</span>).show(<span class="literal">false</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+--------+------+</span><br><span class="line">|name    |sex   |</span><br><span class="line">+--------+------+</span><br><span class="line">|zhangsan|male  |</span><br><span class="line">|lisi    |female|</span><br><span class="line">|wangwu  |male  |</span><br><span class="line">|zhaoliu |male  |</span><br><span class="line">+--------+------+</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="部分字段Select-DSL" >
+          <span class="heading-link">部分字段Select-DSL</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readJson4</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"input/json.txt"</span>)</span><br><span class="line">  <span class="comment">//需要添加隐式转换才能使用DSL语法</span></span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  <span class="comment">//选择部分列</span></span><br><span class="line">  df.select($<span class="string">"name"</span>,$<span class="string">"sex"</span>).show(<span class="literal">false</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="过滤-filter" >
+          <span class="heading-link">过滤-filter</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">readJsonFilter</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">    <span class="keyword">val</span> df = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"input/json.txt"</span>)</span><br><span class="line">    <span class="keyword">import</span> spark.implicits._</span><br><span class="line">    <span class="comment">//选择部分列</span></span><br><span class="line">    <span class="keyword">val</span> dataFrame = df.select($<span class="string">"name"</span>, $<span class="string">"sex"</span>)</span><br><span class="line">    <span class="comment">//1.字符串</span></span><br><span class="line">    dataFrame.filter(<span class="string">"sex='female'"</span>).show(<span class="literal">false</span>)</span><br><span class="line">    <span class="comment">//2.df方式</span></span><br><span class="line">    dataFrame.filter(df(<span class="string">"sex"</span>)===<span class="string">"female"</span>).show()</span><br><span class="line">    <span class="comment">//3.DSL</span></span><br><span class="line">    dataFrame.filter(<span class="symbol">'sex</span>===<span class="string">"female"</span>).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+------+</span><br><span class="line">|name|sex   |</span><br><span class="line">+----+------+</span><br><span class="line">|lisi|female|</span><br><span class="line">+----+------+</span><br><span class="line">...</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="复杂对象" >
+          <span class="heading-link">复杂对象</span>
+        </h4>
+      <p>准备数据</p>
+<figure class="highlight json"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"id"</span>:<span class="number">0</span>,<span class="attr">"name"</span>:<span class="string">"admin"</span>,<span class="attr">"users"</span>:[&#123;<span class="attr">"id"</span>:<span class="number">2</span>,<span class="attr">"name"</span>:<span class="string">"guest"</span>&#125;,&#123;<span class="attr">"id"</span>:<span class="number">3</span>,<span class="attr">"name"</span>:<span class="string">"root"</span>&#125;]&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>程序</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readJsonComplex</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">    <span class="keyword">val</span> df = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"input/complexJson.txt"</span>)</span><br><span class="line">    df.printSchema()</span><br><span class="line">    <span class="keyword">import</span> spark.implicits._</span><br><span class="line">    <span class="comment">//选择部分列</span></span><br><span class="line">    df.select($<span class="string">"name"</span>, $<span class="string">"users.id"</span>,$<span class="string">"users.name"</span>.as(<span class="string">"users.name"</span>)).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line"> |-- id: long (nullable &#x3D; true)</span><br><span class="line"> |-- name: string (nullable &#x3D; true)</span><br><span class="line"> |-- users: array (nullable &#x3D; true)</span><br><span class="line"> |    |-- element: struct (containsNull &#x3D; true)</span><br><span class="line"> |    |    |-- id: long (nullable &#x3D; true)</span><br><span class="line"> |    |    |-- name: string (nullable &#x3D; true)</span><br><span class="line"> </span><br><span class="line">+-----+------+-------------+</span><br><span class="line">| name|    id|   users.name|</span><br><span class="line">+-----+------+-------------+</span><br><span class="line">|admin|[2, 3]|[guest, root]|</span><br><span class="line">+-----+------+-------------+</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+        <h3   id="输出" >
+          <span class="heading-link">输出</span>
+        </h3>
+      <ul>
+<li>df.write.format(“json”).mode(SaveMode.Overwrite).save(path)</li>
+<li>df.write.mode(SaveMode.Overwrite).json(path)</li>
+</ul>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeJson</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"input/json.txt"</span>)</span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  <span class="comment">//选择部分列</span></span><br><span class="line">  <span class="keyword">val</span> dataFrame = df.select($<span class="string">"name"</span>, $<span class="string">"sex"</span>)</span><br><span class="line">  dataFrame.write.format(<span class="string">"json"</span>).mode(<span class="type">SaveMode</span>.<span class="type">Overwrite</span>).save(<span class="string">"output/write.json"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>发现这个写出去和hdfs操作一样,output/write.json只是一个目录,真正的数据是partxxx</p>
+
+        <h2   id="Text文本文件" >
+          <span class="heading-link">Text文本文件</span>
+        </h2>
+      
+        <h3   id="读取-1" >
+          <span class="heading-link">读取</span>
+        </h3>
+      <ul>
+<li>read.format(“text”).load(path)</li>
+<li>read.text(path)</li>
+</ul>
+<p>准备数据</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">13429100031 22552  8  2013-03-11 08:55:19.151754088  571    571    282    571</span><br><span class="line">13429100082    22540  8  2013-03-11 08:58:20.152622488  571    571    270    571</span><br><span class="line">13429100082    22691  8  2013-03-11 08:56:37.149593624  571    571    103    571</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="read-format-“text”-load-path" >
+          <span class="heading-link">read.format(“text”).load(path)</span>
+        </h4>
+      <p>程序</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readText</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">    <span class="keyword">val</span> df = spark.read.format(<span class="string">"text"</span>).load(<span class="string">"input/text.txt"</span>)</span><br><span class="line">    df.show()</span><br><span class="line">    df.printSchema()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+</span><br><span class="line">|               value|</span><br><span class="line">+--------------------+</span><br><span class="line">|13429100031	22552...|</span><br><span class="line">|13429100082	22540...|</span><br><span class="line">|13429100082	22691...|</span><br><span class="line">+--------------------+</span><br><span class="line"></span><br><span class="line">root</span><br><span class="line"> |-- value: string (nullable &#x3D; true)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="map" >
+          <span class="heading-link">map</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"text"</span>).load(<span class="string">"input/text.txt"</span>)</span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  df.map(row=&gt;&#123;</span><br><span class="line">    <span class="keyword">val</span> strings = row.getString(<span class="number">0</span>).split(<span class="string">"\t"</span>)</span><br><span class="line">    (strings(<span class="number">0</span>),strings(<span class="number">1</span>))</span><br><span class="line">  &#125;).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+-----------+-----+</span><br><span class="line">|         _1|   _2|</span><br><span class="line">+-----------+-----+</span><br><span class="line">|13429100031|22552|</span><br><span class="line">|13429100082|22540|</span><br><span class="line">|13429100082|22691|</span><br><span class="line">+-----------+-----+</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="rdd" >
+          <span class="heading-link">rdd</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rdd</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"text"</span>).load(<span class="string">"input/text.txt"</span>)</span><br><span class="line">  df.rdd.map(row=&gt;&#123;</span><br><span class="line">    <span class="keyword">val</span> strings = row.getString(<span class="number">0</span>).split(<span class="string">"\t"</span>)</span><br><span class="line">    (strings(<span class="number">0</span>),strings(<span class="number">1</span>))</span><br><span class="line">  &#125;).foreach(println)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(13429100031,22552)</span><br><span class="line">(13429100082,22540)</span><br><span class="line">(13429100082,22691)</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="textFile" >
+          <span class="heading-link">textFile</span>
+        </h4>
+      <p>textFile直接返回一个DataSet而不是一个DataFrame</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">textFile</span></span>(spark: <span class="type">SparkSession</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> ds = spark.read.textFile(<span class="string">"input/text.txt"</span>)</span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  ds.map(row =&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> strings = row.split(<span class="string">"\t"</span>)</span><br><span class="line">    (strings(<span class="number">0</span>), strings(<span class="number">1</span>))</span><br><span class="line">  &#125;).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+-----------+-----+</span><br><span class="line">|         _1|   _2|</span><br><span class="line">+-----------+-----+</span><br><span class="line">|13429100031|22552|</span><br><span class="line">|13429100082|22540|</span><br><span class="line">|13429100082|22691|</span><br><span class="line">+-----------+-----+</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3   id="输出-1" >
+          <span class="heading-link">输出</span>
+        </h3>
+      <ul>
+<li>write.text(path)</li>
+<li>write.format(“text”).save(path)</li>
+</ul>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeTextFile</span></span>(spark: <span class="type">SparkSession</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> ds = spark.read.textFile(<span class="string">"input/text.txt"</span>)</span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  <span class="keyword">val</span> value = ds.map(row =&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> strings = row.split(<span class="string">"\t"</span>)</span><br><span class="line">    (strings(<span class="number">0</span>), strings(<span class="number">1</span>))</span><br><span class="line">  &#125;)</span><br><span class="line">  value.write.mode(<span class="type">SaveMode</span>.<span class="type">Overwrite</span>).text(<span class="string">"output/text"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>此时会报异常</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.spark.sql.AnalysisException: Text data source supports only a single column, and you have 2 columns.;</span><br></pre></td></tr></table></div></figure>
+
+<p>多列数据想存储为text格式的时候,需要合并成一列</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeTextFile</span></span>(spark: <span class="type">SparkSession</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.text(<span class="string">"input/text.txt"</span>)</span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  <span class="keyword">val</span> value = df.map(row =&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> strings = row.getString(<span class="number">0</span>).split(<span class="string">"\t"</span>)</span><br><span class="line">    (strings(<span class="number">0</span>), strings(<span class="number">1</span>))</span><br><span class="line">  &#125;).map(x =&gt; x._1 +<span class="string">","</span>+ x._2)</span><br><span class="line">  value.write.mode(<span class="type">SaveMode</span>.<span class="type">Overwrite</span>).text(<span class="string">"output/text"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">13429100031,22552</span><br><span class="line">13429100082,22540</span><br><span class="line">13429100082,22691</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="compress" >
+          <span class="heading-link">compress</span>
+        </h4>
+      <p>要压缩保存,可以使用option指定compression</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeCompressionTextFile</span></span>(spark: <span class="type">SparkSession</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.text(<span class="string">"input/text.txt"</span>)</span><br><span class="line">  <span class="keyword">import</span> spark.implicits._</span><br><span class="line">  <span class="keyword">val</span> value = df.map(row =&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> strings = row.getString(<span class="number">0</span>).split(<span class="string">"\t"</span>)</span><br><span class="line">    (strings(<span class="number">0</span>), strings(<span class="number">1</span>))</span><br><span class="line">  &#125;).map(x =&gt; x._1 +<span class="string">","</span>+ x._2)</span><br><span class="line">  value.write.mode(<span class="type">SaveMode</span>.<span class="type">Overwrite</span>).option(<span class="string">"compression"</span>,<span class="string">"bzip2"</span>).text(<span class="string">"output/text"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2   id="csv文件" >
+          <span class="heading-link">csv文件</span>
+        </h2>
+      
+        <h3   id="读取-2" >
+          <span class="heading-link">读取</span>
+        </h3>
+      <ul>
+<li>read.format(“csv”).load(path)</li>
+<li>read.csv(path)</li>
+</ul>
+<p>准备数据</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name|age|sex</span><br><span class="line">zhangsan|20|male</span><br><span class="line">lisi|15|female</span><br><span class="line">wangwu|25|male</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4   id="read-format-“csv”-load-path" >
+          <span class="heading-link">read.format(“csv”).load(path)</span>
+        </h4>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readCsv</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"csv"</span>)</span><br><span class="line">    .option(<span class="string">"header"</span>,<span class="string">"true"</span>)</span><br><span class="line">    .option(<span class="string">"sep"</span>, <span class="string">"|"</span>).load(<span class="string">"input/csv.txt"</span>)</span><br><span class="line">  df.printSchema()</span><br><span class="line">  df.show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line"> |-- name: string (nullable &#x3D; true)</span><br><span class="line"> |-- age: string (nullable &#x3D; true)</span><br><span class="line"> |-- sex: string (nullable &#x3D; true)</span><br><span class="line"> </span><br><span class="line">+--------+---+------+</span><br><span class="line">|    name|age|   sex|</span><br><span class="line">+--------+---+------+</span><br><span class="line">|zhangsan| 20|  male|</span><br><span class="line">|    lisi| 15|female|</span><br><span class="line">|  wangwu| 25|  male|</span><br><span class="line">+--------+---+------+</span><br></pre></td></tr></table></div></figure>
+
+<p>可以发现,csv好像不进行类型推断了,那是因为这个option没开启</p>
+<figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readCsvInfer</span></span>(spark:<span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"csv"</span>)</span><br><span class="line">    .option(<span class="string">"header"</span>,<span class="string">"true"</span>).option(<span class="string">"inferSchema"</span>,<span class="string">"true"</span>)</span><br><span class="line">    .option(<span class="string">"sep"</span>, <span class="string">"|"</span>).load(<span class="string">"input/csv.txt"</span>)</span><br><span class="line">  df.printSchema()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line"> |-- name: string (nullable &#x3D; true)</span><br><span class="line"> |-- age: integer (nullable &#x3D; true)</span><br><span class="line"> |-- sex: string (nullable &#x3D; true)</span><br></pre></td></tr></table></div></figure>
+
+
+
+<blockquote>
+<p>Source的option</p>
+<p>每个Source对应的option可以在 org.apache.spark.sql.execution包下找到相应的xxOption类</p>
+</blockquote>
+
+        <h2   id="JDBC" >
+          <span class="heading-link">JDBC</span>
+        </h2>
+      
+        <h3   id="读取-3" >
+          <span class="heading-link">读取</span>
+        </h3>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readMysql</span></span>(spark: <span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="keyword">val</span> df = spark.read.format(<span class="string">"jdbc"</span>)</span><br><span class="line">    .option(<span class="string">"url"</span>, <span class="string">"jdbc:mysql:///test?serverTimezone=Asia/Shanghai"</span>)</span><br><span class="line">    .option(<span class="string">"driver"</span>, <span class="string">"com.mysql.cj.jdbc.Driver"</span>)</span><br><span class="line">    .option(<span class="string">"dbtable"</span>, <span class="string">"t_order"</span>)</span><br><span class="line">    .option(<span class="string">"user"</span>, <span class="string">"lrj"</span>)</span><br><span class="line">    .option(<span class="string">"password"</span>, <span class="string">"123456"</span>)</span><br><span class="line">    .load()</span><br><span class="line">  df.printSchema()</span><br><span class="line">  df.show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>output</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root</span><br><span class="line"> |-- id: integer (nullable &#x3D; true)</span><br><span class="line"> |-- name: string (nullable &#x3D; true)</span><br><span class="line"> |-- number: integer (nullable &#x3D; true)</span><br><span class="line"> |-- product_id: integer (nullable &#x3D; true)</span><br><span class="line"> |-- total: double (nullable &#x3D; true)</span><br><span class="line"> </span><br><span class="line">+---+-----+------+----------+------+</span><br><span class="line">| id| name|number|product_id| total|</span><br><span class="line">+---+-----+------+----------+------+</span><br><span class="line">|  1|订单1|     2|         1| 355.0|</span><br><span class="line">|  2|订单1|     2|         2|  45.0|</span><br><span class="line">|  3|订单2|     5|         1|1000.0|</span><br><span class="line">+---+-----+------+----------+------+</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3   id="输出-2" >
+          <span class="heading-link">输出</span>
+        </h3>
+      <figure class="highlight scala"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">writeMysql</span></span>(spark: <span class="type">SparkSession</span>): <span class="type">Unit</span> =&#123;</span><br><span class="line">    <span class="keyword">val</span> df = spark.read.format(<span class="string">"jdbc"</span>)</span><br><span class="line">      .option(<span class="string">"url"</span>, <span class="string">"jdbc:mysql:///test?serverTimezone=Asia/Shanghai"</span>)</span><br><span class="line">      .option(<span class="string">"driver"</span>, <span class="string">"com.mysql.cj.jdbc.Driver"</span>)</span><br><span class="line">      .option(<span class="string">"dbtable"</span>, <span class="string">"t_order"</span>)</span><br><span class="line">      .option(<span class="string">"user"</span>, <span class="string">"lrj"</span>)</span><br><span class="line">      .option(<span class="string">"password"</span>, <span class="string">"123456"</span>)</span><br><span class="line">      .load()</span><br><span class="line">    <span class="keyword">import</span> spark.implicits._</span><br><span class="line">    df.filter(<span class="symbol">'total</span>&lt;<span class="number">500</span>) .write.option(<span class="string">"url"</span>, <span class="string">"jdbc:mysql:///test?serverTimezone=Asia/Shanghai"</span>)</span><br><span class="line">      .option(<span class="string">"driver"</span>, <span class="string">"com.mysql.cj.jdbc.Driver"</span>)</span><br><span class="line">      .option(<span class="string">"dbtable"</span>, <span class="string">"t_order_filter"</span>)</span><br><span class="line">      .option(<span class="string">"user"</span>, <span class="string">"lrj"</span>)</span><br><span class="line">      .option(<span class="string">"password"</span>, <span class="string">"123456"</span>).mode(<span class="type">SaveMode</span>.<span class="type">Overwrite</span>).format(<span class="string">"jdbc"</span>).save()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>这个还是挺骚的,不需要提前创建表</p>
+<blockquote>
+<p>SaveMode</p>
+<p>write的SaveMode需要注意,如果不指定,当输出路径存在时会报错</p>
+</blockquote>
+</div><footer class="post-footer"><div class="post-end"><p><span>------ </span><span>End of the article, thanks for your reading</span><span> ------</span></p></div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-author-name">Author: </span><span class="post-copyright-author-value"><a href="https://lurongjiang.github.io">LRJ</a></span></div><div class="post-copyright-link"><span class="post-copyright-link-name">Link: </span><span class="post-copyright-link-value"><a href="https://lurongjiang.github.io/2019/04/28/Spark-SparkSQL-2/">https://lurongjiang.github.io/2019/04/28/Spark-SparkSQL-2/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-notice-name">Copyright: </span><span class="post-copyright-notice-value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/Spark/">Spark</a></span><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/SparkSQL/">SparkSQL</a></span></div><nav class="paginator"><div class="paginator-post"><div class="paginator-post-prev"><a href="/2019/05/02/Spark-SparkSQL-%E8%81%9A%E5%90%88/"><i class="fa fa-chevron-left"></i><span>SparkSQL基础-Spark SQL-聚合和UDF</span></a></div><div class="paginator-post-next"><a href="/2019/04/21/Spark-SparkSQL-1/"><span>SparkSQL基础-Spark SQL</span><i class="fa fa-chevron-right"></i></a></div></div></nav></footer></div></div></div><aside class="sidebar" id="sidebar"><div class="sidebar-inner"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SparkSQL-Source"><span class="toc-number">1.</span> <span class="toc-text">
+          SparkSQL-Source
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON文件"><span class="toc-number">1.1.</span> <span class="toc-text">
+          JSON文件
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取"><span class="toc-number">1.1.1.</span> <span class="toc-text">
+          读取
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#read-format-“json”-load-path"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">
+          read.format(“json”).load(path)
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sparkSession-read-json-path"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">
+          sparkSession.read.json(path)
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#部分字段-select"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">
+          部分字段 select
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#部分字段Select-DSL"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">
+          部分字段Select-DSL
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤-filter"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">
+          过滤-filter
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复杂对象"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">
+          复杂对象
+        </span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输出"><span class="toc-number">1.1.2.</span> <span class="toc-text">
+          输出
+        </span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Text文本文件"><span class="toc-number">1.2.</span> <span class="toc-text">
+          Text文本文件
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">
+          读取
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#read-format-“text”-load-path"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">
+          read.format(“text”).load(path)
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">
+          map
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rdd"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">
+          rdd
+        </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#textFile"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">
+          textFile
+        </span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输出-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">
+          输出
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#compress"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">
+          compress
+        </span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#csv文件"><span class="toc-number">1.3.</span> <span class="toc-text">
+          csv文件
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">
+          读取
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#read-format-“csv”-load-path"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">
+          read.format(“csv”).load(path)
+        </span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC"><span class="toc-number">1.4.</span> <span class="toc-text">
+          JDBC
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读取-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">
+          读取
+        </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输出-2"><span class="toc-number">1.4.2.</span> <span class="toc-text">
+          输出
+        </span></a></li></ol></li></ol></li></ol></div></section><!-- ov = overview --><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/avatar2.png" alt="avatar"></div><p class="sidebar-ov-author__p">LRJ</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state__a posts" href="/archives/"><div class="sidebar-ov-state__a--count">40</div><div class="sidebar-ov-state__a--name">Archives</div></a><a class="sidebar-ov-state__a categories" href="/categories/"><div class="sidebar-ov-state__a--count">17</div><div class="sidebar-ov-state__a--name">Categories</div></a><a class="sidebar-ov-state__a tags" href="/tags/"><div class="sidebar-ov-state__a--count">28</div><div class="sidebar-ov-state__a--name">Tags</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span>You have read </span><span class="sidebar-reading-info-num">0</span></div><div class="sidebar-reading-line"></div></div></div></aside><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright &copy; 2020</span><span class="fa fa-heart footer-icon"></span><span>LRJ.</span></div><div><span>Powered by <a href="http://hexo.io/" title="hexo" target="_blank" rel="noopener">hexo</a></span><span> v4.2.0.</span><span class="separator">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="stun" target="_blank" rel="noopener">stun</a></span><span> v1.7.0.</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="progress"></div></div><div class="back2top" id="back2top"><i class="back2top-icon fa fa-rocket"></i></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=1.7.0"></script><script src="/js/stun-boot.js?v=1.7.0"></script><script src="/js/scroll.js?v=1.7.0"></script><script src="/js/header.js?v=1.7.0"></script><script src="/js/sidebar.js?v=1.7.0"></script></body></html>

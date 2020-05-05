@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="keywords" content="LRJ, Blog"><meta name="description" content="个人博客,记录成长历程"><title>SparkCore基础-Spark On Yarn</title><link rel="icon" href="/images/icons/favicon-16x16.png?v=1.7.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=1.7.0" type="image/png" sizes="32x32"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=1.7.0"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontawesome: {"prefix":"fa"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  post_widget: {"end_text":true},
+  night_mode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"ocean","word_wrap":false},
+  reward: false,
+  fancybox: false,
+  zoom_image: {"enable":true,"mask_color":"rgba(0,0,0,0.6)"},
+  gallery_waterfall: undefined,
+  lazyload: undefined,
+  pjax: undefined,
+  external_link: {"icon":{"enable":true,"name":"external-link"}},
+  shortcuts: undefined,
+  prompt: {"copy_success":"Copy Success","copy_error":"Copy Error","creative_commons":"Creative Commons","copy_button":"Copy"}
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Blog" type="application/atom+xml">
+</head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-btn fa fa-bars"></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/"><i class="fa fa-home"></i>Home</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/archives/"><i class="fa fa-folder-open"></i>Archives</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/categories/"><i class="fa fa-th"></i>Categories</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/tags/"><i class="fa fa-tags"></i>Tags</a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__a" href="/about/"><i class="fa fa-user"></i>About</a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-info"><div class="header-info-inner"><div class="header-info-title">Blog</div><div class="header-info-subtitle">个人博客,记录成长历程</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content"><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-header-title">SparkCore基础-Spark On Yarn</h1><div class="post-header-meta"><span class="post-header-meta-create"><i class="fa fa-calendar-o"></i><span>Posted </span><span>2019-04-15</span></span><span class="post-header-meta-update"><i class="fa fa-calendar-check-o"></i><span>updated </span><span>2019-04-17</span></span></div></header><div class="post-body">
+        <h1   id="Spark-On-Yarn" >
+          <span class="heading-link">Spark On Yarn</span>
+        </h1>
+      
+        <h2   id="Launching-Spark-on-YARN" >
+          <span class="heading-link">Launching Spark on YARN</span>
+        </h2>
+      <ul>
+<li><p>Spark On Yarn务必配置<code>HADOOP_CONF_DIR</code>或者<code>YARN_CONF_DIR</code>指向Hadoop的配置目录(<code>$HADOOP_HOME/etc/hadoop</code>),否则报错</p>
+</li>
+<li><p><strong>Spark On Yarn的两种模式</strong></p>
+<ul>
+<li><p>client</p>
+<p>client模式中,Driver进程运行再客户端的进程中,所以客户端提交任务后必须等待任务执行完成,适合交互性任务</p>
+</li>
+<li><p>cluster</p>
+<p>cluster模式中,Driver是运行在Yarn管理应用程序主进程中,客户端提交完任务后就可以退出了,不适合交互性任务</p>
+</li>
+</ul>
+</li>
+<li><p>Yarn模式和其他cluster模式不一样</p>
+<ul>
+<li>其他模式的–master参数必须指定到master的地址</li>
+<li>yarn模式–master只需要写一个yarn就行,yarn会从配置文件中获取到ResourceManager的地</li>
+</ul>
+</li>
+<li><p>启动spark集群命令</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --class path.to.your.Class --master yarn --deploy-mode cluster [options] &lt;app jar&gt; [app options]</span><br></pre></td></tr></table></div></figure>
+
+<p>例如</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">    --master yarn \</span><br><span class="line">    --deploy-mode cluster \</span><br><span class="line">    --driver-memory 4g \</span><br><span class="line">    --executor-memory 2g \</span><br><span class="line">    --executor-cores 1 \</span><br><span class="line">    --queue thequeue \</span><br><span class="line">    examples/jars/spark-examples*.jar \</span><br><span class="line">    10</span><br></pre></td></tr></table></div></figure>
+
+<p>如果需要使用yarn client模式,只需把–deploy-mode设置为client</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --class org.apache.spark.examples.SparkPi \</span><br><span class="line">    --master yarn \</span><br><span class="line">    --deploy-mode cluster \</span><br><span class="line">    --driver-memory 4g \</span><br><span class="line">    --executor-memory 2g \</span><br><span class="line">    --executor-cores 1 \</span><br><span class="line">    --queue thequeue \</span><br><span class="line">    examples/jars/spark-examples*.jar \</span><br><span class="line">    10</span><br></pre></td></tr></table></div></figure>
+
+
+
+</li>
+</ul>
+
+        <h2   id="Adding-Other-JARs" >
+          <span class="heading-link">Adding Other JARs</span>
+        </h2>
+      <ul>
+<li>集群模式中,Driver不是运行在client端,所以使用<code>SparkContext.addJar</code>并没有用,如果需要添加额外的依赖包,需要使用–jars传入,多个jar包使用逗号分隔</li>
+</ul>
+
+        <h2   id="Preparations" >
+          <span class="heading-link">Preparations</span>
+        </h2>
+      <p><img src="/images/imageimage-20200328140011807.png" alt="image-20200328140011807"></p>
+<p><img src="/images/imageimage-20200328140028637.png" alt="image-20200328140028637"></p>
+<p>为了让Spark能在Yarn上运行,需要指定<code>spark.yarn.archive</code>或者<code>spark.yarn.jars</code>属性,如果两个都没指定,Spark每次任务运行的时候就把<code>$SPARK_HOME/jars</code>下的所有jar包上传到分布式缓存中</p>
+<p>没设置时</p>
+<p><img src="/images/imageimage-20200328162119061.png" alt="image-20200328162119061"></p>
+<p>设置之后</p>
+<p><img src="/images/imageimage-20200328165016988.png" alt="image-20200328165016988"></p>
+<p>spark-default.conf</p>
+<figure class="highlight plain"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark.yarn.jars hdfs:&#x2F;&#x2F;&#x2F;spark&#x2F;*.jar</span><br></pre></td></tr></table></div></figure>
+
+<p>需要把jar包上传到/spark目录,这样就不会每次都上传jar包到hdfs了</p>
+
+        <h2   id="Debugging-your-Application" >
+          <span class="heading-link">Debugging your Application</span>
+        </h2>
+      <ul>
+<li><p>如果开启了yarn日志收集功能(配置了<code>yarn.log-aggregation-enable</code>=true),日志会拷贝到yarn上,然后删除本地日志,如果要看日志,需要使用命令</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn logs -applicationId &lt;app ID&gt;</span><br></pre></td></tr></table></div></figure>
+
+<p>这个命令会打印出指定appId的所有日志信息</p>
+<p>你也可以通过hdfs shell和相关api获取</p>
+<p>你可以通过<code>yarn.nodemanager.remote-app-log-dir</code> and <code>yarn.nodemanager.remote-app-log-dir-suffix</code>来定位你的日志到底是哪一个</p>
+<p>这些日在在SparkUI中也可以查看到,在Executor页签中</p>
+<p>你需要保证Spark日志服务和Yarn的日志服务都是启动的,并且  <code>yarn-site.xml</code>中的<code>yarn.log.server.url</code>属性配置正确</p>
+</li>
+<li><p>如果没有开启日志收集功能,则日志会存在本地,你可以在 <code>$HADOOP_HOME/logs/user</code>中查看到</p>
+</li>
+<li><p>为了检查看每个Container的环境,你需要配置<code>yarn.nodemanager.delete.debug-delay-sec</code>多久删除本地的日志,这样你就可以进入事先配置的<code>yarn.nodemanager.local-dirs</code>目录下查看每个容器的环境情况,下面包含了任务执行的script, JARs和所有的环境变量</p>
+</li>
+<li><p>为了使用自己的log4j来打印日志,可以在spark-submit脚本中,把自己的log4j.properties通过–files传入</p>
+<p>或者在<code>spark.driver.extraJavaOptions</code>中设置’-Dlog4j.configuration=&lt; location of configuration file&gt;’</p>
+<p>当然你可以直接修改$SPARK_HOME/conf/log4j.properties</p>
+</li>
+</ul>
+
+        <h2   id="Important-notes" >
+          <span class="heading-link">Important notes</span>
+        </h2>
+      <ul>
+<li><p>Yarn配置什么调度器就使用什么方式调度</p>
+</li>
+<li><p>在cluster模式中,executor和driver使用的本地目录可以通过<code>yarn.nodemanager.local-dirs</code>来指定</p>
+<p>如果p配置了<code>spark.local.dir</code>,则会忽略掉yarn的配置</p>
+<p>client模式可以指定<code>spark.local.dir</code>,因为Driver并不是运行在yarn集群中的</p>
+</li>
+<li><p><code>--files</code> 和<code>--archives</code>选项都可以使用类似Hadoop中<code>#</code>的用法(和别名类似,不需要每次写全路径)</p>
+</li>
+<li><p>cluster模式中使用<code>--jars</code>来指定本地的jars包路径,但是如果使用的是HDFS, HTTP, HTTPS, or FTP的文件则不需要</p>
+</li>
+</ul>
+</div><footer class="post-footer"><div class="post-end"><p><span>------ </span><span>End of the article, thanks for your reading</span><span> ------</span></p></div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-author-name">Author: </span><span class="post-copyright-author-value"><a href="https://lurongjiang.github.io">LRJ</a></span></div><div class="post-copyright-link"><span class="post-copyright-link-name">Link: </span><span class="post-copyright-link-value"><a href="https://lurongjiang.github.io/2019/04/15/Spark-Spark%20On%20Yarn/">https://lurongjiang.github.io/2019/04/15/Spark-Spark%20On%20Yarn/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-notice-name">Copyright: </span><span class="post-copyright-notice-value">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> unless stating additionally</span></div></div><div class="post-tags"><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/Spark/">Spark</a></span><span class="post-tags-item"><i class="post-tags-item__i fa fa-tags"></i><a class="post-tags-item__a" href="https://lurongjiang.github.io/tags/SparkCore/">SparkCore</a></span></div><nav class="paginator"><div class="paginator-post"><div class="paginator-post-prev"><a href="/2019/04/17/Spark-SparkCore-SumbmitApplication/"><i class="fa fa-chevron-left"></i><span>SparkCore基础-Spark作业提交</span></a></div><div class="paginator-post-next"><a href="/2019/04/08/Spark-SparkCore-2/"><span>SparkCore基础-Action</span><i class="fa fa-chevron-right"></i></a></div></div></nav></footer></div></div></div><aside class="sidebar" id="sidebar"><div class="sidebar-inner"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spark-On-Yarn"><span class="toc-number">1.</span> <span class="toc-text">
+          Spark On Yarn
+        </span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Launching-Spark-on-YARN"><span class="toc-number">1.1.</span> <span class="toc-text">
+          Launching Spark on YARN
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-Other-JARs"><span class="toc-number">1.2.</span> <span class="toc-text">
+          Adding Other JARs
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparations"><span class="toc-number">1.3.</span> <span class="toc-text">
+          Preparations
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debugging-your-Application"><span class="toc-number">1.4.</span> <span class="toc-text">
+          Debugging your Application
+        </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Important-notes"><span class="toc-number">1.5.</span> <span class="toc-text">
+          Important notes
+        </span></a></li></ol></li></ol></div></section><!-- ov = overview --><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/avatar2.png" alt="avatar"></div><p class="sidebar-ov-author__p">LRJ</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state__a posts" href="/archives/"><div class="sidebar-ov-state__a--count">40</div><div class="sidebar-ov-state__a--name">Archives</div></a><a class="sidebar-ov-state__a categories" href="/categories/"><div class="sidebar-ov-state__a--count">17</div><div class="sidebar-ov-state__a--name">Categories</div></a><a class="sidebar-ov-state__a tags" href="/tags/"><div class="sidebar-ov-state__a--count">28</div><div class="sidebar-ov-state__a--name">Tags</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="Creative Commons" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span>You have read </span><span class="sidebar-reading-info-num">0</span></div><div class="sidebar-reading-line"></div></div></div></aside><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright &copy; 2020</span><span class="fa fa-heart footer-icon"></span><span>LRJ.</span></div><div><span>Powered by <a href="http://hexo.io/" title="hexo" target="_blank" rel="noopener">hexo</a></span><span> v4.2.0.</span><span class="separator">|</span><span>Theme - <a href="https://github.com/liuyib/hexo-theme-stun/" title="stun" target="_blank" rel="noopener">stun</a></span><span> v1.7.0.</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="progress"></div></div><div class="back2top" id="back2top"><i class="back2top-icon fa fa-rocket"></i></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=1.7.0"></script><script src="/js/stun-boot.js?v=1.7.0"></script><script src="/js/scroll.js?v=1.7.0"></script><script src="/js/header.js?v=1.7.0"></script><script src="/js/sidebar.js?v=1.7.0"></script></body></html>
